@@ -3,59 +3,107 @@
   xmlns:f="http://java.sun.com/jsf/core"
   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
   xmlns:p="http://primefaces.org/ui" >
-  
+
+<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>  
+
+<h:head></h:head>
+
+<h:body>
+
+    <p:button icon="pi pi-check" />
+    <p:button value="Submit" icon="pi pi-check" />
+    <p:button value="Submit" icon="pi pi-check" iconPos="right" />
+    <p:button value="#{genossenschaftUebersichtBean.bezeichnung}"  icon="pi pi-check" iconPos="right" />
+
  <h:form>
     <div class="card">
     
-    <div class="card">
-    <h5>Basic</h5>
-    <p:commandButton type="button" value="Submit" />
-    <p:commandButton type="button" value="Disabled" disabled="true" />
-    </div>
-    
-    	<p:toolbar id="tb">
-    		<f:facet name="left">
-    			<p:commandButton type="button" value="#{genossenschaftUebersichtBean.bezeichnung}" icon="pi p-file"/>
-    		</f:facet>
-    		<f:facet name="next">
-    			<p:commandButton type="button" value="testParameter#{facesContext.externalContext.getInitParameter('primefaces.THEME')}" styleClass="ui-button-secondary"/>
-    		</f:facet>
-    		<f:facet name="next2">
-    			<p:commandButton type="button" value="testPath#{facesContext.externalContext.requestContextPath}" icon="pi p-file" styleClass="ui-button-info" />
-    		</f:facet>
-    	</p:toolbar>
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <i class="pi pi-user pi-spinner" style="font-size: 2rem"></i>
     	
-    	<p:button icon="pi pi-check" />
-    <p:button value="Submit" icon="pi pi-check" />
+    <p:button icon="pi pi-check" />
+    <p:button value="Submit" icon="pi pi-user" />
     <p:button value="Submit" icon="pi pi-check" iconPos="right" />
+    <p:button value="#{genossenschaftUebersichtBean.bezeichnung}"  icon="pi pi-check" iconPos="right" />
     <p:button value="testPath2#{facesContext.externalContext.requestContextPath}" icon="pi pi-check" iconPos="right" />
     <p:button value="testParameter2#{facesContext.externalContext.getInitParameter('primefaces.THEME')}" icon="pi pi-check" iconPos="right" />
     	
     	
-    	<p:dataTable var="mitglied" value="#{genossenschaftUebersichtBean.mitglieder}" rows="10"
+    <h3>Sample Layout</h3>
+<div class="ui-g">
+	<!-- Seitenteil mit Mitgliederliste -->
+    <div class="ui-g-12 ui-md-2">Menu</div>
+    
+    <p:dataTable var="mitglied" value="#{genossenschaftUebersichtBean.mitglieder}" rows="10"
                      paginator="true"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                      rowsPerPageTemplate="5,10,{ShowAll|'All'}">
-    		<p:column headerText="UUID">
-                <h:outputText value="#{mitglied.mglMitgliedID}" />
-            </p:column>
+
             <p:column headerText="Vorname">
                 <h:outputText value="#{mitglied.vorname}" />
             </p:column>
             <p:column headerText="Nachname">
                 <h:outputText value="#{mitglied.nachname}" />
             </p:column>
-            <p:column headerText="Beitrittsdatum">
-                <h:outputText value="#{mitglied.beitrittsdatum}" />
-            </p:column>
-            <p:column headerText="Austrittssdatum">
-                <h:outputText value="#{mitglied.austrittsdatum}" />
-            </p:column>
 
         </p:dataTable>
     
+    
+    <!-- Header mit Genossenschaftsinformationen -->
+    <div class="ui-g-12 ui-md-10 ui-g-nopad">
+        <div class="ui-g-12">
+			
+		<p:panelGrid columns="4" layout="flex" columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+    		<p:outputLabel for="textA1" value="#{genossenschaftUebersichtBean.bezeichnung}"/>
+    		<p:inputText id="textA1" />
+ 
+    		<p:outputLabel for="dateA" value="Date" />
+    		<p:datePicker id="dateA" showIcon="true" style="width:auto" />
+ 
+    		<p:outputLabel for="checkboxA" value="Checkbox" />
+    		<p:selectBooleanCheckbox id="checkboxA" itemLabel="Checkbox" />
+ 
+    		<p:outputLabel for="selectOneA" value="SelectOne" />
+    		<p:selectOneMenu id="selectOneA">
+        		<f:selectItem itemLabel="Select One" itemValue="" />
+        		<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+        		<f:selectItem itemLabel="PS4" itemValue="PS4" />
+        		<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+    		</p:selectOneMenu>
+		</p:panelGrid>
+
+        </div>
+        <div class="ui-g-12 ui-g-nopad">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet, orci nec dictum convallis, ligula mauris vestibulum turpis, nec varius tortor quam at diam. Nullam a viverra nibh. In tincidunt tempor lectus quis vulputate. Pellentesque nec dui aliquam, lobortis est in, lobortis ante</div>
+                <div class="ui-g-12 ui-md-4">Maecenas vel nisi aliquet, vulputate tortor id, laoreet massa. Maecenas mattis tristique bibendum. Suspendisse vel mi dictum, vestibulum lacus quis, pulvinar quam. Proin vulputate, nibh at finibus varius, leo eros lacinia elit, nec blandit odio tellus a justo. Donec nec ex auctor, tristique nulla nec, rutrum sapien.</div>
+                <div class="ui-g-12 ui-md-4">Proin efficitur in leo eget ornare. Nam vestibulum neque sed velit sagittis sodales. Sed scelerisque hendrerit magna a hendrerit. Cras tempor sem at justo pharetra convallis. Curabitur vel sodales purus. Vestibulum interdum facilisis nulla imperdiet suscipit. Quisque lectus felis, condimentum eget hendrerit sit amet.</div>
+            </div>
+             
+            <div class="ui-g">
+                <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature1.jpg" style="width:100%"/></div>  
+                <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature2.jpg" style="width:100%"/></div> 
+                <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature3.jpg" style="width:100%"/></div>    
+                <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature4.jpg" style="width:100%"/></div>      
+            </div>
+             
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-6">Phasellus faucibus purus volutpat mauris lacinia sodales. Ut sit amet sapien facilisis, commodo dui non, fringilla tellus. Quisque tempus facilisis nisi sodales finibus. Pellentesque neque orci, ullamcorper vitae ligula quis, dignissim euismod augue.</div>
+                <div class="ui-g-12 ui-md-6">Fusce ullamcorper congue massa, eget ullamcorper nunc lobortis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultrices dui eget dolor feugiat dapibus. Aliquam pretium leo et egestas luctus. Nunc facilisis gravida tellus.</div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g-12">
+        Footer
+    </div>
+</div>
+    	
+    	
+    
     </div>
 </h:form>
+
+</h:body>
 
 </html>
