@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui" >
+  
+ <h:form>
+    <div class="card">
+    
+    <div class="card">
+    <h5>Basic</h5>
+    <p:commandButton type="button" value="Submit" />
+    <p:commandButton type="button" value="Disabled" disabled="true" />
+    </div>
+    
+    	<p:toolbar id="tb">
+    		<f:facet name="left">
+    			<p:commandButton type="button" value="#{genossenschaftUebersichtBean.bezeichnung}" icon="pi p-file"/>
+    		</f:facet>
+    		<f:facet name="next">
+    			<p:commandButton type="button" value="testParameter#{facesContext.externalContext.getInitParameter('primefaces.THEME')}" styleClass="ui-button-secondary"/>
+    		</f:facet>
+    		<f:facet name="next2">
+    			<p:commandButton type="button" value="testPath#{facesContext.externalContext.requestContextPath}" icon="pi p-file" styleClass="ui-button-info" />
+    		</f:facet>
+    	</p:toolbar>
+    	
+    	<p:button icon="pi pi-check" />
+    <p:button value="Submit" icon="pi pi-check" />
+    <p:button value="Submit" icon="pi pi-check" iconPos="right" />
+    <p:button value="testPath2#{facesContext.externalContext.requestContextPath}" icon="pi pi-check" iconPos="right" />
+    <p:button value="testParameter2#{facesContext.externalContext.getInitParameter('primefaces.THEME')}" icon="pi pi-check" iconPos="right" />
+    	
+    	
+    	<p:dataTable var="mitglied" value="#{genossenschaftUebersichtBean.mitglieder}" rows="10"
+                     paginator="true"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                     rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+    		<p:column headerText="UUID">
+                <h:outputText value="#{mitglied.mglMitgliedID}" />
+            </p:column>
+            <p:column headerText="Vorname">
+                <h:outputText value="#{mitglied.vorname}" />
+            </p:column>
+            <p:column headerText="Nachname">
+                <h:outputText value="#{mitglied.nachname}" />
+            </p:column>
+            <p:column headerText="Beitrittsdatum">
+                <h:outputText value="#{mitglied.beitrittsdatum}" />
+            </p:column>
+            <p:column headerText="Austrittssdatum">
+                <h:outputText value="#{mitglied.austrittsdatum}" />
+            </p:column>
+
+        </p:dataTable>
+    
+    </div>
+</h:form>
+
+</html>
