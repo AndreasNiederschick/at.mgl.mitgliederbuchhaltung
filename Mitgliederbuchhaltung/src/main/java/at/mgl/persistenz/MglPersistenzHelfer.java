@@ -17,42 +17,27 @@ public class MglPersistenzHelfer {
 		
 		Map<UUID,Genossenschaft> ret = new HashMap<UUID,Genossenschaft>();
 		
-		Genossenschaft tmpGen = null;
-		Mitglied tmpMgl = null;
-		Anteilsblock tmpAnt = null;
+		transaktionen.stream().filter(t -> t.getMglTransaktionsTyp().positionsTyp() == "Genossenschaft")
+							.forEach(t -> ladeGenossenschaft(t,ret));
 		
-        for(MglTransaktion t : transaktionen) {
-        	switch (t.getMglTransaktionsTyp().positionsTyp()) {
-        	case "Genossenschaft":
-        		tmpGen = ladeGenossenschaft(t,ret);
-        		break;
-        	case "Mitglied":
-        		tmpGen = ladeGenossenschaft(t,ret);
-        		tmpMgl = ladeMitglied(t, tmpGen);
-        		break;
-        	case "Anteilsblock":
-        		tmpGen = ladeGenossenschaft(t,ret);
-        		tmpMgl = ladeMitglied(t, tmpGen);
-        		tmpAnt = ladeAnteilsblock(t, tmpMgl);
-        		break;
-        	default: System.out.println("Transaktionstyp nicht korrekt");
-        	} 	
-        }
+		
+		transaktionen.stream().filter(t -> t.getMglTransaktionsTyp().positionsTyp() == "Mitglied")
+							.forEach(t -> ladeMitglied(t,ret));
+		
+		transaktionen.stream().filter(t -> t.getMglTransaktionsTyp().positionsTyp() == "Anteilsblock")
+		.forEach(t -> ladeAnteilsblock(t,ret));
         
-        List<Genossenschaft> genList = new ArrayList(ret.values());
-        for (Genossenschaft gen : genList) {
-        	gen.aufrollen();
-        	for (Mitglied mgl : gen.getMitgliederListe()) {
-        		mgl.aufrollen();
-        		for(Anteilsblock ant : mgl.getAnteilsblockListe()) {
-        			ant.aufrollen();
-        		}
-        	}
-        }
         
-    	if (tmpGen != null) { tmpGen.aufrollen(); }
-    	if (tmpMgl != null) { tmpMgl.aufrollen(); }
-    	if (tmpAnt != null) { tmpAnt.aufrollen(); }  
+		List<Genossenschaft> genList = new ArrayList(ret.values());
+        
+        genList.stream().forEach(Genossenschaft::aufrollen);
+        
+        genList.stream().forEach(g -> g.getMitgliederListe().stream()
+        				.forEach(Mitglied::aufrollen));
+        
+        genList.stream().forEach(g -> g.getMitgliederListe().stream()
+        				.forEach(m -> m.getAnteilsblockListe().stream()
+        				.forEach(Anteilsblock::aufrollen)));
         
 		return ret;
 	}
@@ -61,36 +46,35 @@ public class MglPersistenzHelfer {
 		
 		Genossenschaft ret;
 		
-		if (genossenschaften.containsKey(t.getMglGenossenschaftID())) {
-			ret = genossenschaften.get(t.getMglGenossenschaftID());
-			ret.getTransaktionen().add(t);
-		} else {
-			ret = new Genossenschaft(t.getMglGenossenschaftID());
-			ret.getTransaktionen().add(t);
-			genossenschaften.put(ret.getGenossenschaftID(), ret);
-		}
+		ret = genossenschaften.computeIfAbsent(t.getMglGenossenschaftID(),Genossenschaft::new);
+		ret.getTransaktionen().add(t);
+		genossenschaften.put(ret.getGenossenschaftID(), ret);
+		
 		return ret;
 	}
-	private static Mitglied ladeMitglied(MglTransaktion t, Genossenschaft gen) {
+	private static Mitglied ladeMitglied(MglTransaktion t, Map<UUID,Genossenschaft> genossenschaften) {
+		
 		Mitglied ret;
-		if (gen.getMitglieder().containsKey(t.getMglMitgliedID())) {
-			ret = gen.getMitglieder().get(t.getMglMitgliedID());
-			ret.getTransaktionen().add(t);
-		} else {
-			ret = gen.neuesMitglied(t.getMglMitgliedID());
-			ret.getTransaktionen().add(t);
-		}
+		Genossenschaft gen = genossenschaften.get(t.getMglGenossenschaftID());
+		
+		ret = gen.getMitglieder().computeIfAbsent(t.getMglMitgliedID(),Mitglied::new);
+		ret.setGen(gen);
+		ret.getTransaktionen().add(t);
+		
 		return ret;
+		
 	}
-	private static Anteilsblock ladeAnteilsblock(MglTransaktion t, Mitglied mgl) {
+	
+	private static Anteilsblock ladeAnteilsblock(MglTransaktion t, Map<UUID,Genossenschaft> genossenschaften) {
+		
 		Anteilsblock ret;
-		if (mgl.getAnteile().containsKey(t.getMglAnteilsblockID())) {
-			ret = mgl.getAnteile().get(t.getMglAnteilsblockID());
-			ret.getTransaktionen().add(t);
-		} else {
-			ret = mgl.neuerAnteilsblock(t.getMglAnteilsblockID());
-			ret.getTransaktionen().add(t);
-		}
+		Genossenschaft gen = genossenschaften.get(t.getMglGenossenschaftID());
+		Mitglied mgl = gen.getMitglieder().get(t.getMglMitgliedID());
+		
+		ret = mgl.getAnteile().computeIfAbsent(t.getMglAnteilID(),Anteilsblock::new);
+		ret.setGen(gen);
+		ret.setMgl(mgl);
+		ret.getTransaktionen().add(t);
 		
 		return ret;
 	}

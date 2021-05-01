@@ -21,7 +21,7 @@ import at.mgl.transaktion.inhalt.IMglTransaktionInhalt;
 public class MglPersistenzJSON {
 	
 	public static final String jsonDirectory = "/home/andreas/mglJson/";
-	public static String jsonFile = "gen1.json";
+	public static String jsonFile = "gen2.json";
 	
 	public static void schreibeTransaktionInJsonDatei(MglTransaktion mglTransaktion) {
 		

@@ -33,6 +33,8 @@ public class App
         //TestSzenario.szenarioStandard();
         //TestSzenario.szenarioLasttest(100, 10);
         
+    	
+    	
     	Map<UUID,Genossenschaft> genossenschaften = new HashMap<UUID,Genossenschaft>();    	
     	
         List<MglTransaktion> transaktionen = MglPersistenzJSON.leseTransaktionenVonJsonDatei();
@@ -43,15 +45,21 @@ public class App
         System.out.println("Anzahl Genossenschaften: " + genossenschaften.size());
         
         List<Genossenschaft> genList = new ArrayList(genossenschaften.values());
-        for (Genossenschaft gen : genList) {
-        	System.out.println(gen.getBezeichnung());
-        	for (Mitglied mgl : gen.getMitgliederListe()) {
-        		System.out.println(mgl.getNachname());
-        		for(Anteilsblock ant : mgl.getAnteilsblockListe()) {
-        			//System.out.println(ant.getZustand());
-        		}
-        	}
-        }
+        
+        genList.stream().forEach(Genossenschaft::print);
+        System.out.println(genList.size());
+        genList.stream().forEach(g -> g.getTransaktionen().stream().forEach(MglTransaktion::printMglTransaktion));
+        
+        genList.stream().forEach(g -> g.getMitgliederListe()
+        		.stream()
+        		.forEach(m -> { System.out.println("Mitglied " + m.getMglMitgliedID() + " " + m.getVorname()); }))
+        		;
+        /*
+        genList.stream().forEach(g -> g.getMitgliederListe().stream()
+        		.forEach(m -> m.getAnteilsblockListe().stream()
+        		.forEach(Anteilsblock::printAnteilsblock)))
+        		;
+        		*/
     }
     
 }

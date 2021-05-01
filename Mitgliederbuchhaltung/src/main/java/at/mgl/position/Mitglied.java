@@ -38,7 +38,7 @@ public class Mitglied extends Position implements IPosition{
 	//private List<Anteilsblock> anteile;
 	private Map<UUID,Anteilsblock> anteile;
 	
-	/* Liste der Transaktionen zum Mitlglied */
+	/* Liste der Transaktionen zum Mitglied */
 	private List<MglTransaktion> transaktionen;
 	
 	// ---------------------------------------------------------------------------------
@@ -48,6 +48,19 @@ public class Mitglied extends Position implements IPosition{
 	public Mitglied(Genossenschaft gen) {
 		super();
 		this.gen = gen;
+		this.mglMitgliedID = UUID.randomUUID();
+		this.anteile = new HashMap<UUID,Anteilsblock>();
+		this.transaktionen = new ArrayList<MglTransaktion>();
+		this.mglNummer = 0;
+		this.vorname = "";
+		this.nachname = "";
+		this.beitrittsdatum = new Date(1800,1,1);
+		this.austrittsdatum = new Date(1800,1,1);
+	}
+	
+	public Mitglied(UUID mglMitgliedID) {
+		super();
+		this.gen = null;
 		this.mglMitgliedID = UUID.randomUUID();
 		this.anteile = new HashMap<UUID,Anteilsblock>();
 		this.transaktionen = new ArrayList<MglTransaktion>();

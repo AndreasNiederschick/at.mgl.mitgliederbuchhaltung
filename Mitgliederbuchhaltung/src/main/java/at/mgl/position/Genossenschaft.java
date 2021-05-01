@@ -46,7 +46,6 @@ public class Genossenschaft extends Position implements IPosition{
 		this.anteilshoehe = 0;
 		this.mitglieder = new HashMap<UUID,Mitglied>();
 		this.transaktionen = new ArrayList<MglTransaktion>();
-		//System.out.println("Neue Genossenschaft ohne Bezeichnung angelegt");
 	}
 	
 	public Genossenschaft (UUID uuid) {
@@ -56,7 +55,6 @@ public class Genossenschaft extends Position implements IPosition{
 		this.anteilshoehe = 0;
 		this.mitglieder = new HashMap<UUID,Mitglied>();
 		this.transaktionen = new ArrayList<MglTransaktion>();
-		//System.out.println("Neue Genossenschaft ohne Bezeichnung angelegt");
 	}
 
 	/*
@@ -139,6 +137,10 @@ public class Genossenschaft extends Position implements IPosition{
 	public MglTransaktion  setAnteilshoeheTransaktion(double anteilshoehe)  {
 		return this.setAnteilshoeheTransaktionPer(anteilshoehe, new Date());
 	}	
+	
+	public void print () {
+		System.out.println("###Genossenschaft: " + this.getGenossenschaftID() + " #Bezeichnung " + this.getBezeichnung() + " #Anteilshöhe " + this.getAnteilshoehe()+ " #Anzahl Mitglieder " + this.getMitglieder().size());
+	}
 	
 	/*
 	 * Getter & Setter

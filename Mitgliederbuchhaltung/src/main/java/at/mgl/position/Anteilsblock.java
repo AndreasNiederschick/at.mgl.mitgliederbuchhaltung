@@ -52,6 +52,25 @@ public class Anteilsblock extends Position implements IPosition {
 		this.hatHaftung = false;
 		this.transaktionen = new ArrayList<MglTransaktion>();
 		}
+	
+	public Anteilsblock(UUID anteilID) {
+		super();
+		this.gen = null;
+		this.mgl = null;
+		this.mglAnteilID = anteilID;
+		this.tstZeichnung = null;
+		this.tstKuendigung = null;
+		this.tstAuszahlungssperrfrist = null;
+		this.tstAuszahlung = null;
+		this.menge = 0;
+		this.zustand = ZustandAnteilsblock.Start;
+		this.anteilshoehe = 0;
+		this.eingezahlt = 0;
+		this.hatHaftung = false;
+		this.transaktionen = new ArrayList<MglTransaktion>();
+		}
+	
+	
 	public Anteilsblock(Genossenschaft gen, Mitglied mgl, UUID anteilID) {
 		super();
 		this.gen = gen;

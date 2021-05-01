@@ -1,1 +1,5 @@
 at/mgl/Mitgliederbuchhaltung/test/SampleIT.class
+at/mgl/Mitgliederbuchhaltung/test/AppTest.class
+at/mgl/Mitgliederbuchhaltung/test/GenossenschaftTest.class
+at/mgl/Mitgliederbuchhaltung/test/AnteilsblockTest.class
+at/mgl/Mitgliederbuchhaltung/test/MitgliedTest.class
