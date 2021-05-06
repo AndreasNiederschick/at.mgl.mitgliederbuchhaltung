@@ -18,7 +18,7 @@ import at.mgl.transaktion.inhalt.MglTransaktionInhaltDouble;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 
-public class Genossenschaft implements IPosition{
+public class Genossenschaft implements Position{
 	
 	/* Variablen zum festschreiben von Systemereignissen */
 	protected UUID genossenschaftID;

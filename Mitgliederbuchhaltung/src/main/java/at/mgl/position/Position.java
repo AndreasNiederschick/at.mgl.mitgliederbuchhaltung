@@ -2,7 +2,7 @@ package at.mgl.position;
 
 import java.util.Date;
 
-public interface IPosition {
+public interface Position {
 
 	public void aufrollen ();
 	
