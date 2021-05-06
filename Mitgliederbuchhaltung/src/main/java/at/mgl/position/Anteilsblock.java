@@ -14,7 +14,7 @@ import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 
-public class Anteilsblock extends Position implements IPosition {
+public class Anteilsblock implements IPosition {
 	
 	private Genossenschaft gen;
 	private Mitglied mgl;
