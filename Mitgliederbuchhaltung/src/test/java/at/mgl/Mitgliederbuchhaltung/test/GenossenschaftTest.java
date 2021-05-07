@@ -2,7 +2,7 @@ package at.mgl.Mitgliederbuchhaltung.test;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,12 +18,12 @@ import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 public class GenossenschaftTest {
 	
 	Genossenschaft gen;
-	Date datumTest;
+	LocalDate datumTest;
 	
 	@Before
 	public void setUp() {
 		gen = new Genossenschaft();
-		datumTest = new Date(1900,1,1);
+		datumTest = LocalDate.of(1900,1,1);
 	}
 	@After
 	public void cleanUp() {

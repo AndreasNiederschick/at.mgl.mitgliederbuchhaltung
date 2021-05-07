@@ -2,7 +2,7 @@ package at.mgl.Mitgliederbuchhaltung.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,20 +14,20 @@ import at.mgl.position.Mitglied;
 import at.mgl.position.ZustandAnteilsblock;
 import at.mgl.transaktion.MglTransaktion;
 import at.mgl.transaktion.MglTransaktionsTyp;
-import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
+import at.mgl.transaktion.inhalt.MglTransaktionInhaltLocalDate;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
 
 public class AnteilsblockTest {
 	
-	Genossenschaft gen;
-	Mitglied mgl;
-	Anteilsblock ant;
+	Genossenschaft genossenschaft;
+	Mitglied mitglied;
+	Anteilsblock anteilsblock;
 	
 	@Before
 	public void setUp() {
-		gen = new Genossenschaft();
-		mgl = gen.neuesMitglied();
-		ant = mgl.neuerAnteilsblock();
+		genossenschaft = new Genossenschaft();
+		mitglied = genossenschaft.neuesMitglied();
+		anteilsblock = mitglied.neuerAnteilsblock();
 	}
 	@After
 	public void cleanUp() {
@@ -37,58 +37,58 @@ public class AnteilsblockTest {
 	@Test
 	public void testAufrollen() {
 		
-		Anteilsblock antAufroll = mgl.neuerAnteilsblock();
+		Anteilsblock antAufroll = mitglied.neuerAnteilsblock();
 		
 		
-		MglTransaktion tzeichnung = ant.zeichnen(new Date(2021,01,01), new MglTransaktionInhaltInteger(10));
-		antAufroll.setTransaktionen(ant.getTransaktionen());
+		MglTransaktion tzeichnung = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(10));
+		antAufroll.setTransaktionen(anteilsblock.getTransaktionen());
 		antAufroll.aufrollen();
 		assertEquals("Erwarteter Zustand: " + ZustandAnteilsblock.Gezeichnet
 				,ZustandAnteilsblock.Gezeichnet
 				,antAufroll.getZustand());	
 		
-		ant.stornieren(tzeichnung);
-		antAufroll.setTransaktionen(ant.getTransaktionen());
+		anteilsblock.stornieren(tzeichnung);
+		antAufroll.setTransaktionen(anteilsblock.getTransaktionen());
 		antAufroll.aufrollen();
 		assertEquals("Erwarteter Zustand: " + ZustandAnteilsblock.Start
 				,ZustandAnteilsblock.Start
 				,antAufroll.getZustand());	
 		
-		tzeichnung = ant.zeichnen(new Date(2021,01,01), new MglTransaktionInhaltInteger(10));
-		antAufroll.setTransaktionen(ant.getTransaktionen());
+		tzeichnung = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(10));
+		antAufroll.setTransaktionen(anteilsblock.getTransaktionen());
 		antAufroll.aufrollen();
 		assertEquals("Erwarteter Zustand: " + ZustandAnteilsblock.Gezeichnet
 				,ZustandAnteilsblock.Gezeichnet
 				,antAufroll.getZustand());	
 		
-		MglTransaktion tkuen = ant.kuendigen(new Date(2021,02,01));
-		antAufroll.setTransaktionen(ant.getTransaktionen());
+		MglTransaktion tkuen = anteilsblock.kuendigen(LocalDate.of(2021,02,01));
+		antAufroll.setTransaktionen(anteilsblock.getTransaktionen());
 		antAufroll.aufrollen();
 		assertEquals("Erwarteter Zustand: " + ZustandAnteilsblock.Gekuendigt
 				,ZustandAnteilsblock.Gekuendigt
 				,antAufroll.getZustand());	
 		
 		
-		ant.stornieren(tkuen);
-		antAufroll.setTransaktionen(ant.getTransaktionen());
+		anteilsblock.stornieren(tkuen);
+		antAufroll.setTransaktionen(anteilsblock.getTransaktionen());
 		antAufroll.aufrollen();
 		assertEquals("Erwarteter Zustand: " + ZustandAnteilsblock.Gezeichnet
 				,ZustandAnteilsblock.Gezeichnet
 				,antAufroll.getZustand());	
 		
-		tkuen = ant.kuendigen(new Date(2021,02,01));
-		antAufroll.setTransaktionen(ant.getTransaktionen());
+		tkuen = anteilsblock.kuendigen(LocalDate.of(2021,02,01));
+		antAufroll.setTransaktionen(anteilsblock.getTransaktionen());
 		antAufroll.aufrollen();
 		assertEquals("Erwarteter Zustand: " + ZustandAnteilsblock.Gekuendigt
 				,ZustandAnteilsblock.Gekuendigt
 				,antAufroll.getZustand());	
 		
-		MglTransaktion tazspf = ant.auszahlungssperrfrist(new Date(2021,03,01));
-		ant.stornieren(tazspf);
+		MglTransaktion tazspf = anteilsblock.auszahlungssperrfrist(LocalDate.of(2021,03,01));
+		anteilsblock.stornieren(tazspf);
 		
-		tazspf = ant.auszahlungssperrfrist(new Date(2021,03,01));
-		antAufroll.setTransaktionen(ant.getTransaktionen());
-		antAufroll.aufrollenPer(new Date(2021,02,015));
+		tazspf = anteilsblock.auszahlungssperrfrist(LocalDate.of(2021,03,01));
+		antAufroll.setTransaktionen(anteilsblock.getTransaktionen());
+		antAufroll.aufrollenPer(LocalDate.of(2021,02,015));
 		assertEquals("Erwarteter Zustand: " + ZustandAnteilsblock.Gekuendigt
 				,ZustandAnteilsblock.Gekuendigt
 				,antAufroll.getZustand());
@@ -98,11 +98,11 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Auszahlungssperrfrist
 				,antAufroll.getZustand());
 		
-		MglTransaktion tauszahlen = ant.auszahlen(new Date(2021,04,01));
-		ant.stornieren(tauszahlen);
-		tauszahlen = ant.auszahlen(new Date(2021,04,01));
-		antAufroll.setTransaktionen(ant.getTransaktionen());
-		antAufroll.aufrollenPer(new Date(2021,03,015));
+		MglTransaktion tauszahlen = anteilsblock.auszahlen(LocalDate.of(2021,04,01));
+		anteilsblock.stornieren(tauszahlen);
+		tauszahlen = anteilsblock.auszahlen(LocalDate.of(2021,04,01));
+		antAufroll.setTransaktionen(anteilsblock.getTransaktionen());
+		antAufroll.aufrollenPer(LocalDate.of(2021,03,015));
 		assertEquals("Erwarteter Zustand: " + ZustandAnteilsblock.Auszahlungssperrfrist
 				,ZustandAnteilsblock.Auszahlungssperrfrist
 				,antAufroll.getZustand());
@@ -123,18 +123,18 @@ public class AnteilsblockTest {
 		
 		assertEquals("Zustand zu Beginn muss sein: " + ZustandAnteilsblock.Start
 				,ZustandAnteilsblock.Start
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		
 		// Test erste Zeichnung
 		
-		MglTransaktion t = ant.zeichnen(new Date(2021,01,01), new MglTransaktionInhaltInteger(menge));
+		MglTransaktion t = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(menge));
 
 		assertEquals("Zustand nach Zeichnung muss sein: " + ZustandAnteilsblock.Gezeichnet
 				,ZustandAnteilsblock.Gezeichnet
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Transaktion Zeichnen wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Zeichnung hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Zeichnung
 				,t.getMglTransaktionsTyp());
@@ -144,121 +144,121 @@ public class AnteilsblockTest {
 		
 		// Test Zeichnung nicht erlaubte Transaktionen wegen nicht erlaubter Zustandsänderung
 		
-		t = ant.zeichnen(new Date(2021,01,01), new MglTransaktionInhaltInteger(menge+1));	
+		t = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(menge+1));	
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);	
 		
-		t = ant.auszahlungssperrfrist(new Date(2021,01,01));
+		t = anteilsblock.auszahlungssperrfrist(LocalDate.of(2021,01,01));
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);
 		
-		t = ant.auszahlen(new Date(2021,01,01));
+		t = anteilsblock.auszahlen(LocalDate.of(2021,01,01));
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);
 		
 		assertEquals("Zustand nach nicht erlaubten Geschäftsfällen muss sein: " + ZustandAnteilsblock.Gezeichnet
 				,ZustandAnteilsblock.Gezeichnet
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Nach nicht erlaubten Geschäftsfällen dürfen keine weiteren Transaktionen in der Liste sein"
 				,1
-				,ant.getTransaktionen().size());	
+				,anteilsblock.getTransaktionen().size());	
 
 		// Test Kündigung im Status Gezeichnet
 		
-		t = ant.kuendigen(new Date(2021,01,01));
+		t = anteilsblock.kuendigen(LocalDate.of(2021,01,01));
 		
 		assertEquals("Zustand nach Kündigung muss sein: " + ZustandAnteilsblock.Gekuendigt
 				,ZustandAnteilsblock.Gekuendigt
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Transaktion Kündigen wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,2
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Kündigung hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Kuendigung
 				,t.getMglTransaktionsTyp());
 		
 		// Test Kündigung nicht erlaubte Transaktionen wegen nicht erlaubter Zustandsänderung
 		
-		t = ant.zeichnen(new Date(2021,01,01), new MglTransaktionInhaltInteger(menge));	
+		t = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(menge));	
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);	
 		
-		t = ant.kuendigen(new Date(2021,01,01));
+		t = anteilsblock.kuendigen(LocalDate.of(2021,01,01));
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);
 		
-		t = ant.auszahlen(new Date(2021,01,01));
+		t = anteilsblock.auszahlen(LocalDate.of(2021,01,01));
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);
 		
 		assertEquals("Zustand nach nicht erlaubten Geschäftsfällen muss sein: " + ZustandAnteilsblock.Gekuendigt
 				,ZustandAnteilsblock.Gekuendigt
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Nach nicht erlaubten Geschäftsfällen dürfen keine weiteren Transaktionen in der Liste sein"
 				,2
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		
 		// Test Auszahlungssperrfrist im Status Gekündigt
 		
-		t = ant.auszahlungssperrfrist(new Date(2021,01,01));
+		t = anteilsblock.auszahlungssperrfrist(LocalDate.of(2021,01,01));
 				
 		assertEquals("Zustand nach Auszahlungssperrfrist muss sein: " + ZustandAnteilsblock.Auszahlungssperrfrist
 				,ZustandAnteilsblock.Auszahlungssperrfrist
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Transaktion Auszahlungssperrfristwurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,3
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Auszahlungssperrfrist hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Auszahlungssperrfrist
 				,t.getMglTransaktionsTyp());
 		
 		// Test Auszahlungssperrfrist nicht erlaubte Transaktionen wegen nicht erlaubter Zustandsänderung
 		
-		t = ant.zeichnen(new Date(2021,01,01), new MglTransaktionInhaltInteger(menge));	
+		t = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(menge));	
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);	
 				
-		t = ant.kuendigen(new Date(2021,01,01));
+		t = anteilsblock.kuendigen(LocalDate.of(2021,01,01));
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);
 				
-		t = ant.auszahlungssperrfrist(new Date(2021,01,01));
+		t = anteilsblock.auszahlungssperrfrist(LocalDate.of(2021,01,01));
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);
 				
 		assertEquals("Zustand nach nicht erlaubten Geschäftsfällen muss sein: " + ZustandAnteilsblock.Auszahlungssperrfrist
 				,ZustandAnteilsblock.Auszahlungssperrfrist
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Nach nicht erlaubten Geschäftsfällen dürfen keine weiteren Transaktionen in der Liste sein"
 				,3
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		
 
 		// Test Auszahlung im Status Auszahlungssperrfrist
 		
-		t = ant.auszahlen(new Date(2021,01,01));
+		t = anteilsblock.auszahlen(LocalDate.of(2021,01,01));
 						
 		assertEquals("Zustand nach Auszahlung muss sein: " + ZustandAnteilsblock.Ausgezahlt
 				,ZustandAnteilsblock.Ausgezahlt
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Transaktion Auszahlungssperrfristwurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,4
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Auszahlungssperrfrist hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Auszahlung
 				,t.getMglTransaktionsTyp());
 		
 		// Test Ausgezahlt nicht erlaubte Transaktionen wegen nicht erlaubter Zustandsänderung
 		
-		t = ant.zeichnen(new Date(2021,01,01), new MglTransaktionInhaltInteger(menge));	
+		t = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(menge));	
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);	
 						
-		t = ant.kuendigen(new Date(2021,01,01));
+		t = anteilsblock.kuendigen(LocalDate.of(2021,01,01));
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);
 					
-		t = ant.auszahlungssperrfrist(new Date(2021,01,01));
+		t = anteilsblock.auszahlungssperrfrist(LocalDate.of(2021,01,01));
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);
 		
-		t = ant.auszahlen(new Date(2021,01,01));
+		t = anteilsblock.auszahlen(LocalDate.of(2021,01,01));
 		assertEquals("Transaktion der nicht erlauben Geschäftsfälle muss null sein",null,t);
 						
 		assertEquals("Zustand nach nicht erlaubten Geschäftsfällen muss sein: " + ZustandAnteilsblock.Ausgezahlt
 				,ZustandAnteilsblock.Ausgezahlt
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Nach nicht erlaubten Geschäftsfällen dürfen keine weiteren Transaktionen in der Liste sein"
 				,4
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 
 	}
 	
@@ -270,18 +270,18 @@ public class AnteilsblockTest {
 		
 		assertEquals("Zustand zu Beginn muss sein: " + ZustandAnteilsblock.Start
 				,ZustandAnteilsblock.Start
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		
 		// Test erste Zeichnung
 		
-		MglTransaktion t = ant.zeichnen(new Date(2021,01,01), new MglTransaktionInhaltInteger(menge));
+		MglTransaktion t = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(menge));
 
 		assertEquals("Zustand nach Zeichnung muss sein: " + ZustandAnteilsblock.Gezeichnet
 				,ZustandAnteilsblock.Gezeichnet
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Transaktion Zeichnen wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Zeichnung hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Zeichnung
 				,t.getMglTransaktionsTyp());
@@ -290,100 +290,100 @@ public class AnteilsblockTest {
 				,((MglTransaktionInhaltInteger)t.getMglInhalt()).getInhalt());
 		
 		//Test Stornierung Zeichnung
-		ant.stornieren(t);
+		anteilsblock.stornieren(t);
 		
 		assertEquals("Zustand nach Stornierung Zeichnung muss sein: " + ZustandAnteilsblock.Start
 				,ZustandAnteilsblock.Start
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		assertEquals("Transaktion Storno Zeichnen wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,2
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Zeichnung hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Zeichnung
 				,t.getMglTransaktionsTyp());
 		
 		//Test zeichnen dann kündigen - dann Storno der Kündigung und dann der Zeichnung
-		t = ant.zeichnen(new Date(2021,01,01), new MglTransaktionInhaltInteger(menge));
-		MglTransaktion tkuen = ant.kuendigen(new Date(2021,02,01));
+		t = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(menge));
+		MglTransaktion tkuen = anteilsblock.kuendigen(LocalDate.of(2021,02,01));
 		
 		assertEquals("Erwartet werden 4 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung"
 				,4
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		
 		//Test Stornierung nicht erlaubt - in Zustand Kündigung kann die Zeichnung nicht storniert werden
-		ant.stornieren(t);
+		anteilsblock.stornieren(t);
 		
 		assertEquals("Zustand nach nicht möglicher Stornierung Zeichnung muss sein: " + ZustandAnteilsblock.Gekuendigt
 				,ZustandAnteilsblock.Gekuendigt
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 4 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung"
 				,4
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		
 		//Test bis zu Ausgezahlt - dann zurückstornieren nach Start
-		MglTransaktion tazspf = ant.auszahlungssperrfrist(new Date(2021,02,01));
-		MglTransaktion tauszahlung = ant.auszahlen(new Date(2021,02,01));
+		MglTransaktion tazspf = anteilsblock.auszahlungssperrfrist(LocalDate.of(2021,02,01));
+		MglTransaktion tauszahlung = anteilsblock.auszahlen(LocalDate.of(2021,02,01));
 		
 		assertEquals("Zustand nach nicht möglicher Stornierung Zeichnung muss sein: " + ZustandAnteilsblock.Ausgezahlt
 				,ZustandAnteilsblock.Ausgezahlt
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 6 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung"
 				,6
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		
-		ant.stornieren(t);
-		ant.stornieren(tkuen);
-		ant.stornieren(tazspf);
+		anteilsblock.stornieren(t);
+		anteilsblock.stornieren(tkuen);
+		anteilsblock.stornieren(tazspf);
 		
 		assertEquals("Zustand nach nicht möglicher Stornierung Zeichnung muss sein: " + ZustandAnteilsblock.Ausgezahlt
 				,ZustandAnteilsblock.Ausgezahlt
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 6 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung"
 				,6
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		
-		ant.stornieren(tauszahlung);
+		anteilsblock.stornieren(tauszahlung);
 		
 		assertEquals("Zustand nach nicht möglicher Stornierung Zeichnung muss sein: " + ZustandAnteilsblock.Auszahlungssperrfrist
 				,ZustandAnteilsblock.Auszahlungssperrfrist
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 7 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung, Storno Auszahlung"
 				,7
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		
-		ant.stornieren(tazspf);
+		anteilsblock.stornieren(tazspf);
 		
 		assertEquals("Zustand nach nicht möglicher Stornierung Zeichnung muss sein: " + ZustandAnteilsblock.Gekuendigt
 				,ZustandAnteilsblock.Gekuendigt
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 8 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung, Storno Auszahlung, Storno AZSPF"
 				,8
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 		
-		ant.stornieren(tkuen);
+		anteilsblock.stornieren(tkuen);
 		
 		assertEquals("Zustand nach nicht möglicher Stornierung Zeichnung muss sein: " + ZustandAnteilsblock.Gezeichnet
 				,ZustandAnteilsblock.Gezeichnet
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 9 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung, Storno Auszahlung, Storno AZSPF, Storno Kündigung"
 				,9
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 
-		ant.stornieren(t);
+		anteilsblock.stornieren(t);
 		
 		assertEquals("Zustand nach nicht möglicher Stornierung Zeichnung muss sein: " + ZustandAnteilsblock.Start
 				,ZustandAnteilsblock.Start
-				,ant.getZustand());
+				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 10 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung, Storno Auszahlung, Storno AZSPF, Storno Kündigung, Storno Zeichnung"
 				,10
-				,ant.getTransaktionen().size());
+				,anteilsblock.getTransaktionen().size());
 
 	}
 

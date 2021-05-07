@@ -17,7 +17,7 @@ import at.mgl.position.Genossenschaft;
 import at.mgl.position.Mitglied;
 import at.mgl.transaktion.*;
 import at.mgl.transaktion.inhalt.IMglTransaktionInhalt;
-import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
+import at.mgl.transaktion.inhalt.MglTransaktionInhaltLocalDate;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltDouble;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;

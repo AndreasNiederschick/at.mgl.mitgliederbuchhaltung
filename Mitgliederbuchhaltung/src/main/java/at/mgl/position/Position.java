@@ -1,10 +1,10 @@
 package at.mgl.position;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface Position {
 
 	public void aufrollen ();
 	
-	public void aufrollenPer(Date datumPer);
+	public void aufrollenPer(LocalDate datumPer);
 }

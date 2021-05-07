@@ -1,8 +1,8 @@
 package at.mgl.position;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,9 +10,7 @@ import at.mgl.transaktion.MglTransaktion;
 import at.mgl.transaktion.MglTransaktionFactory;
 import at.mgl.transaktion.MglTransaktionsTyp;
 import at.mgl.transaktion.inhalt.IMglTransaktionInhalt;
-import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
-import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 
 public class Anteilsblock implements Position {
 	
@@ -20,10 +18,10 @@ public class Anteilsblock implements Position {
 	private Mitglied mitglied = null;
 	private UUID mglAnteilsblockID = null;
 	
-	private Timestamp tstZeichnung = null;
-	private Timestamp tstKuendigung = null;
-	private Timestamp tstAuszahlungssperrfrist = null;
-	private Timestamp tstAuszahlung = null;
+	private LocalDateTime tstZeichnung = null;
+	private LocalDateTime tstKuendigung = null;
+	private LocalDateTime tstAuszahlungssperrfrist = null;
+	private LocalDateTime tstAuszahlung = null;
 	
 	private ZustandAnteilsblock zustand = ZustandAnteilsblock.Start;
 	
@@ -56,7 +54,7 @@ public class Anteilsblock implements Position {
 		this.mglAnteilsblockID = anteilsblockID;
 	}
 	
-	public MglTransaktion zeichnen (Date mglDatumTransaktion,IMglTransaktionInhalt mglInhalt) {
+	public MglTransaktion zeichnen (LocalDate mglDatumTransaktion,IMglTransaktionInhalt mglInhalt) {
 		
 		MglTransaktion ret = null;
 		
@@ -83,7 +81,7 @@ public class Anteilsblock implements Position {
 		return ret;
 	}
 	
-	public MglTransaktion kuendigen (Date mglDatumTransaktion) {
+	public MglTransaktion kuendigen (LocalDate mglDatumTransaktion) {
 		
 		MglTransaktion ret = null;
 		
@@ -109,7 +107,7 @@ public class Anteilsblock implements Position {
 		return ret;
 	}
 	
-	public MglTransaktion auszahlungssperrfrist (Date mglDatumTransaktion) {
+	public MglTransaktion auszahlungssperrfrist (LocalDate mglDatumTransaktion) {
 		
 		MglTransaktion ret = null;
 		
@@ -136,7 +134,7 @@ public class Anteilsblock implements Position {
 		return ret;
 	}
 
-	public MglTransaktion auszahlen(Date mglDatumTransaktion) {
+	public MglTransaktion auszahlen(LocalDate mglDatumTransaktion) {
 		
 		MglTransaktion ret = null;
 		
@@ -188,15 +186,15 @@ public class Anteilsblock implements Position {
 	}
 	
 	public void aufrollen() {
-		this.aufrollenPer(new Date(9999,31,12));
+		this.aufrollenPer(LocalDate.of(9999,12,31));
 	}
 	
 	@Override
-	public void aufrollenPer(Date datumPer) {
+	public void aufrollenPer(LocalDate datumPer) {
 		
 		for (MglTransaktion mglTransaktion : this.transaktionen) {
 			
-			if (mglTransaktion.getMglDatumTransaktion().before(datumPer)) {
+			if (mglTransaktion.getMglDatumTransaktion().isBefore(datumPer)) {
 				
 				switch(mglTransaktion.getMglTransaktionsTyp()) {
 				
@@ -259,27 +257,27 @@ public class Anteilsblock implements Position {
 		this.mglAnteilsblockID = mglAnteilID;
 	}
 
-	public Timestamp getTstZeichnung() {
+	public LocalDateTime getTstZeichnung() {
 		return tstZeichnung;
 	}
 
-	public void setTstZeichnung(Timestamp tstZeichnung) {
+	public void setTstZeichnung(LocalDateTime tstZeichnung) {
 		this.tstZeichnung = tstZeichnung;
 	}
 
-	public Timestamp getTstKuendigung() {
+	public LocalDateTime getTstKuendigung() {
 		return tstKuendigung;
 	}
 
-	public void setTstKuendigung(Timestamp tstKuendigung) {
+	public void setTstKuendigung(LocalDateTime tstKuendigung) {
 		this.tstKuendigung = tstKuendigung;
 	}
 
-	public Timestamp getTstAuszahlungssperrfrist() {
+	public LocalDateTime getTstAuszahlungssperrfrist() {
 		return tstAuszahlungssperrfrist;
 	}
 
-	public void setTstAuszahlungssperrfrist(Timestamp tstAuszahlungssperrfrist) {
+	public void setTstAuszahlungssperrfrist(LocalDateTime tstAuszahlungssperrfrist) {
 		this.tstAuszahlungssperrfrist = tstAuszahlungssperrfrist;
 	}
 
@@ -331,11 +329,11 @@ public class Anteilsblock implements Position {
 		this.mitglied = mitglied;
 	}
 
-	public Timestamp getTstAuszahlung() {
+	public LocalDateTime getTstAuszahlung() {
 		return tstAuszahlung;
 	}
 
-	public void setTstAuszahlung(Timestamp tstAuszahlung) {
+	public void setTstAuszahlung(LocalDateTime tstAuszahlung) {
 		this.tstAuszahlung = tstAuszahlung;
 	}
 

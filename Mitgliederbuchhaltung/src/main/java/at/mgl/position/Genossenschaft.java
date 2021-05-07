@@ -1,7 +1,7 @@
 package at.mgl.position;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,16 +77,16 @@ public class Genossenschaft implements Position{
 	@Override
 	public void aufrollen() {
 		
-		this.aufrollenPer(new Date(9999,31,12));
+		this.aufrollenPer(LocalDate.of(9999,12,31));
 		
 	}
 
 	@Override
-	public void aufrollenPer(Date datumPer) {
+	public void aufrollenPer(LocalDate datumPer) {
 		
 		for (MglTransaktion mglTransaktion : this.transaktionen) {
 			
-			if (mglTransaktion.getMglDatumTransaktion().before(datumPer)) {
+			if (mglTransaktion.getMglDatumTransaktion().isBefore(datumPer)) {
 				
 				switch(mglTransaktion.getMglTransaktionsTyp()) {
 				
@@ -109,10 +109,8 @@ public class Genossenschaft implements Position{
 				default: break;
 				
 				}	
-			}
-				
+			}		
 		}
-		
 	}
 	
 	public List<Mitglied> getMitgliederListe () {
@@ -120,7 +118,7 @@ public class Genossenschaft implements Position{
 	}
 	
 	// GETTER & SETTER die Transaktionen erstellen
-	public MglTransaktion  setBezeichnungTransaktionPer(String bezeichnung,Date datum)  {
+	public MglTransaktion  setBezeichnungTransaktionPer(String bezeichnung,LocalDate datum)  {
 		
 		this.bezeichnung = bezeichnung;
 		
@@ -135,10 +133,10 @@ public class Genossenschaft implements Position{
 		return ret;
 	}
 	public MglTransaktion  setBezeichnungTransaktion(String bezeichnung)  {
-		return this.setBezeichnungTransaktionPer(bezeichnung, new Date());
+		return this.setBezeichnungTransaktionPer(bezeichnung, LocalDate.now());
 	}
 	
-	public MglTransaktion  setAnteilshoeheTransaktionPer(double anteilshoehe, Date datum)  {
+	public MglTransaktion  setAnteilshoeheTransaktionPer(double anteilshoehe, LocalDate datum)  {
 		
 		this.anteilshoehe = anteilshoehe;
 		
@@ -153,7 +151,7 @@ public class Genossenschaft implements Position{
 		return ret;
 	}
 	public MglTransaktion  setAnteilshoeheTransaktion(double anteilshoehe)  {
-		return this.setAnteilshoeheTransaktionPer(anteilshoehe, new Date());
+		return this.setAnteilshoeheTransaktionPer(anteilshoehe, LocalDate.now());
 	}	
 	
 	public void print () {

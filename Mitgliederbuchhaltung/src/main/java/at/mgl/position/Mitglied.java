@@ -1,7 +1,7 @@
 package at.mgl.position;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.UUID;
 import at.mgl.transaktion.MglTransaktion;
 import at.mgl.transaktion.MglTransaktionFactory;
 import at.mgl.transaktion.MglTransaktionsTyp;
-import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
+import at.mgl.transaktion.inhalt.MglTransaktionInhaltLocalDate;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 
@@ -24,8 +24,8 @@ public class Mitglied implements Position{
 	private int mitgliedsNummer = 0;
 	private String vorname = "";
 	private String nachname = "";
-	private Date beitrittsdatum = new Date(1800,1,1);
-	private Date austrittsdatum = new Date(1800,1,1);
+	private LocalDate beitrittsdatum = LocalDate.of(1000,1,1);
+	private LocalDate austrittsdatum = LocalDate.of(1000,1,1);
 
 	
 	/* Liste der Anteile zum Miglied */
@@ -58,15 +58,15 @@ public class Mitglied implements Position{
 	
 	@Override
 	public void aufrollen() {
-		this.aufrollenPer(new Date(9999,31,12));
+		this.aufrollenPer(LocalDate.of(9999,12,31));
 	}
 
 	@Override
-	public void aufrollenPer(Date datumPer) {
+	public void aufrollenPer(LocalDate datumPer) {
 		
 		for (MglTransaktion mglTransaktion : this.transaktionen) {
 			
-			if (mglTransaktion.getMglDatumTransaktion().before(datumPer)) {
+			if (mglTransaktion.getMglDatumTransaktion().isBefore(datumPer)) {
 				
 				switch(mglTransaktion.getMglTransaktionsTyp()) {
 				
@@ -82,7 +82,7 @@ public class Mitglied implements Position{
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						System.out.println("Keine Stammdatenänderung bei Storno zu Transaktionstyp " + mglTransaktion.getMglTransaktionsTyp());
 					} else {
-						this.beitrittsdatum = ((MglTransaktionInhaltDate)mglTransaktion.getMglInhalt()).getInhalt();
+						this.beitrittsdatum = ((MglTransaktionInhaltLocalDate)mglTransaktion.getMglInhalt()).getInhalt();
 					}
 					break;
 				
@@ -90,7 +90,7 @@ public class Mitglied implements Position{
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						System.out.println("Keine Stammdatenänderung bei Storno zu Transaktionstyp " + mglTransaktion.getMglTransaktionsTyp());
 					} else {
-						this.austrittsdatum = ((MglTransaktionInhaltDate)mglTransaktion.getMglInhalt()).getInhalt();
+						this.austrittsdatum = ((MglTransaktionInhaltLocalDate)mglTransaktion.getMglInhalt()).getInhalt();
 					}
 					break;
 				
@@ -121,7 +121,7 @@ public class Mitglied implements Position{
 	}
 	
 	// GETTER & SETTER die Transaktionen erstellen	
-	public MglTransaktion setMitgliedsNummerTransaktionPer(int mitgliedsNummer, Date datum) {
+	public MglTransaktion setMitgliedsNummerTransaktionPer(int mitgliedsNummer, LocalDate datum) {
 		
 		this.mitgliedsNummer = mitgliedsNummer;
 		
@@ -138,11 +138,11 @@ public class Mitglied implements Position{
 	}
 	public MglTransaktion setMglNummerTransaktion(int mitgliedsNummer) {
 		
-		return this.setMitgliedsNummerTransaktionPer(mitgliedsNummer, new Date());
+		return this.setMitgliedsNummerTransaktionPer(mitgliedsNummer, LocalDate.now());
 		
 	}
 	
-	public MglTransaktion setVornameTransaktionPer(String vorname,Date datum) {
+	public MglTransaktion setVornameTransaktionPer(String vorname,LocalDate datum) {
 		
 		this.vorname = vorname;
 		
@@ -159,11 +159,11 @@ public class Mitglied implements Position{
 	}
 	public MglTransaktion setVornameTransaktion(String vorname) {
 		
-		return this.setVornameTransaktionPer(vorname, new Date());
+		return this.setVornameTransaktionPer(vorname, LocalDate.now());
 		
 	}
 	
-	public MglTransaktion setNachnameTransaktionPer(String nachname,Date datum) {
+	public MglTransaktion setNachnameTransaktionPer(String nachname,LocalDate datum) {
 		
 		this.nachname = nachname;
 		
@@ -180,11 +180,11 @@ public class Mitglied implements Position{
 	}
 	public MglTransaktion setNachnameTransaktion(String nachname) {
 		
-		return this.setNachnameTransaktionPer(nachname, new Date());
+		return this.setNachnameTransaktionPer(nachname, LocalDate.now());
 		
 	}
 	
-	public MglTransaktion  setBeitrittsdatumTransaktionPer(Date beitrittsdatum,Date datum) {
+	public MglTransaktion  setBeitrittsdatumTransaktionPer(LocalDate beitrittsdatum,LocalDate datum) {
 		
 		this.beitrittsdatum = beitrittsdatum;
 		
@@ -193,19 +193,19 @@ public class Mitglied implements Position{
 				,this.mitgliedID
 				,datum
 				,MglTransaktionsTyp.MglBeitritt
-				,new MglTransaktionInhaltDate(beitrittsdatum));
+				,new MglTransaktionInhaltLocalDate(beitrittsdatum));
 		
 		this.transaktionen.add(ret);
 		
 		return ret;
 	}
-	public MglTransaktion  setBeitrittsdatumTransaktion(Date beitrittsdatum) {
+	public MglTransaktion  setBeitrittsdatumTransaktion(LocalDate beitrittsdatum) {
 		
-		return this.setBeitrittsdatumTransaktionPer(beitrittsdatum, new Date());
+		return this.setBeitrittsdatumTransaktionPer(beitrittsdatum, LocalDate.now());
 		
 	}
 	
-	public MglTransaktion  setAustrittsdatumTransaktionPer(Date austrittsdatum, Date datum) {
+	public MglTransaktion  setAustrittsdatumTransaktionPer(LocalDate austrittsdatum, LocalDate datum) {
 		
 		this.austrittsdatum = austrittsdatum;
 		
@@ -214,15 +214,15 @@ public class Mitglied implements Position{
 				,this.mitgliedID
 				,datum
 				,MglTransaktionsTyp.MglAustritt
-				,new MglTransaktionInhaltDate(austrittsdatum));
+				,new MglTransaktionInhaltLocalDate(austrittsdatum));
 		
 		this.transaktionen.add(ret);
 		
 		return ret;
 	}
-	public MglTransaktion  setAustrittsdatumTransaktion(Date austrittsdatum) {
+	public MglTransaktion  setAustrittsdatumTransaktion(LocalDate austrittsdatum) {
 		
-		return this.setAustrittsdatumTransaktionPer(austrittsdatum, new Date());
+		return this.setAustrittsdatumTransaktionPer(austrittsdatum, LocalDate.now());
 		
 	}
 	
@@ -275,19 +275,19 @@ public class Mitglied implements Position{
 		this.nachname = nachname;
 	}
 
-	public Date getBeitrittsdatum() {
+	public LocalDate getBeitrittsdatum() {
 		return this.beitrittsdatum;
 	}
 
-	public void setBeitrittsdatum(Date beitrittsdatum) {
+	public void setBeitrittsdatum(LocalDate beitrittsdatum) {
 		this.beitrittsdatum = beitrittsdatum;
 	}
 
-	public Date getAustrittsdatum() {
+	public LocalDate getAustrittsdatum() {
 		return this.austrittsdatum;
 	}
 
-	public void setAustrittsdatum(Date austrittsdatum) {
+	public void setAustrittsdatum(LocalDate austrittsdatum) {
 		this.austrittsdatum = austrittsdatum;
 	}
 

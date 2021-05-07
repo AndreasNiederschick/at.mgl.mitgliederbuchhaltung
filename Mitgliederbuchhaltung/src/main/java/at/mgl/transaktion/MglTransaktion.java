@@ -1,6 +1,8 @@
 package at.mgl.transaktion;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +13,7 @@ public class MglTransaktion implements IMglTransaktion {
 
 	/* Variablen zum festschreiben von Systemereignissen */
 	private UUID mglTransaktionID;
-	private Timestamp mglTstAngelegt;
+	private LocalDateTime mglTstAngelegt;
 	
 	/* Variablen zur Identifikation der Zugehörigkeit zu anderen Entitäten */
 	private UUID mglGenossenschaftID;
@@ -19,13 +21,13 @@ public class MglTransaktion implements IMglTransaktion {
 	private UUID mglAnteilsblockID;
 	
 	/* Variablen zum Inhalt der Transaktion */
-	private Date mglDatumTransaktion;
+	private LocalDate mglDatumTransaktion;
 	private MglTransaktionsTyp mglTransaktionsTyp;
 	//private Object mglTransaktionsWert;
 	private IMglTransaktionInhalt mglInhalt;
 	
 	/* Variablen für Stornoinformationen */
-	private Timestamp mglTstStorniert;
+	private LocalDateTime mglTstStorniert;
 	private UUID mglTransaktionIDStorno;
 	private boolean istStornoTransaktion;
 	
@@ -39,7 +41,7 @@ public class MglTransaktion implements IMglTransaktion {
 	 * - Ohne AnteilID
 	 */
 	public MglTransaktion (UUID mglGenossenschaftID
-							,Date mglDatumTransaktion
+							,LocalDate mglDatumTransaktion
 							,MglTransaktionsTyp mglTransaktionsTyp
 							,IMglTransaktionInhalt mglInhalt) {
 		super();
@@ -55,11 +57,13 @@ public class MglTransaktion implements IMglTransaktion {
 	 * - Mit MitgliederID
 	 * - Ohne AnteilID
 	 */
-	public MglTransaktion (UUID mglGenossenschaftID, UUID mglMitgliedID
-							,Date mglDatumTransaktion
-							,MglTransaktionsTyp mglTransaktionsTyp
-							,IMglTransaktionInhalt mglInhalt) {
-		super();
+	public MglTransaktion (
+			UUID mglGenossenschaftID
+			,UUID mglMitgliedID
+			,LocalDate mglDatumTransaktion
+			,MglTransaktionsTyp mglTransaktionsTyp
+			,IMglTransaktionInhalt mglInhalt) {
+;
 		this.mglGenossenschaftID = mglGenossenschaftID;
 		this.mglMitgliedID =mglMitgliedID;
 		this.mglAnteilsblockID = null;
@@ -73,12 +77,14 @@ public class MglTransaktion implements IMglTransaktion {
 	 * - Mit MitgliederID
 	 * - Mit AnteilID
 	 */
-	public MglTransaktion (UUID mglGenossenschaftID, UUID mglMitgliedID,UUID mglAnteilsblockID
-							,Date mglDatumTransaktion
-							,MglTransaktionsTyp mglTransaktionsTyp
-							,IMglTransaktionInhalt mglInhalt) {
-		super();
-		
+	public MglTransaktion (
+			UUID mglGenossenschaftID
+			,UUID mglMitgliedID
+			,UUID mglAnteilsblockID
+			,LocalDate mglDatumTransaktion
+			,MglTransaktionsTyp mglTransaktionsTyp
+			,IMglTransaktionInhalt mglInhalt) {
+
 		this.mglGenossenschaftID = mglGenossenschaftID;
 		this.mglMitgliedID =mglMitgliedID;
 		this.mglAnteilsblockID = mglAnteilsblockID;
@@ -86,15 +92,17 @@ public class MglTransaktion implements IMglTransaktion {
 		this.initOhneReferenzIDs(mglDatumTransaktion, mglTransaktionsTyp, mglInhalt);
 	}
 	
-	private void initOhneReferenzIDs(Date mglDatumTransaktion,MglTransaktionsTyp mglTransaktionsTyp,IMglTransaktionInhalt mglInhalt) {
+	private void initOhneReferenzIDs(LocalDate mglDatumTransaktion,MglTransaktionsTyp mglTransaktionsTyp,IMglTransaktionInhalt mglInhalt) {
+		
 		this.mglTransaktionID = UUID.randomUUID();
-		this.mglTstAngelegt = new Timestamp(new Date().getTime());
+		this.mglTstAngelegt = LocalDateTime.now();
 		this.mglDatumTransaktion = mglDatumTransaktion;
 		this.mglTransaktionsTyp = mglTransaktionsTyp;
 		this.mglInhalt = mglInhalt;
 		this.mglTstStorniert = null;
 		this.mglTransaktionIDStorno = null;
 		this.istStornoTransaktion = false;
+	
 	}
 	
 
@@ -102,8 +110,15 @@ public class MglTransaktion implements IMglTransaktion {
 
 	@Override
 	public MglTransaktion stornieren() {
-		// Stornotransaktion anlegen
-		MglTransaktion ret = MglTransaktionFactory.erstelleTransaktion(this.mglGenossenschaftID, this.mglMitgliedID,this.mglAnteilsblockID,this.mglDatumTransaktion, this.mglTransaktionsTyp, this.mglInhalt);
+		
+		MglTransaktion ret = MglTransaktionFactory.erstelleTransaktion(
+				this.mglGenossenschaftID
+				,this.mglMitgliedID
+				,this.mglAnteilsblockID
+				,this.mglDatumTransaktion
+				,this.mglTransaktionsTyp
+				,this.mglInhalt);
+		
 		ret.setIstStornoTransaktion(true);
 		ret.mglTstStorniert = this.mglTstAngelegt;
 		ret.mglTransaktionIDStorno = this.mglTransaktionID;
@@ -189,11 +204,11 @@ public class MglTransaktion implements IMglTransaktion {
 		this.mglTransaktionID = mglTransaktionID;
 	}
 
-	public Timestamp getMglTstAngelegt() {
+	public LocalDateTime getMglTstAngelegt() {
 		return mglTstAngelegt;
 	}
 
-	public void setMglTstAngelegt(Timestamp mglTstAngelegt) {
+	public void setMglTstAngelegt(LocalDateTime mglTstAngelegt) {
 		this.mglTstAngelegt = mglTstAngelegt;
 	}
 
@@ -221,11 +236,11 @@ public class MglTransaktion implements IMglTransaktion {
 		this.mglTransaktionsTyp = mglTransaktionsTyp;
 	}
 
-	public Timestamp getMglTstStorniert() {
+	public LocalDateTime getMglTstStorniert() {
 		return mglTstStorniert;
 	}
 
-	public void setMglTstStorniert(Timestamp mglTstStorniert) {
+	public void setMglTstStorniert(LocalDateTime mglTstStorniert) {
 		this.mglTstStorniert = mglTstStorniert;
 	}
 
@@ -253,11 +268,11 @@ public class MglTransaktion implements IMglTransaktion {
 		this.mglGenossenschaftID = mglGenossenschaftID;
 	}
 
-	public Date getMglDatumTransaktion() {
+	public LocalDate getMglDatumTransaktion() {
 		return mglDatumTransaktion;
 	}
 
-	public void setMglDatumTransaktion(Date mglDatumTransaktion) {
+	public void setMglDatumTransaktion(LocalDate mglDatumTransaktion) {
 		this.mglDatumTransaktion = mglDatumTransaktion;
 	}
 	public UUID getMglAnteilsblockID() {

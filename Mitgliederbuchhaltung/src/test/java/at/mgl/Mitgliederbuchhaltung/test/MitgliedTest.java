@@ -2,7 +2,7 @@ package at.mgl.Mitgliederbuchhaltung.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,22 +12,21 @@ import at.mgl.position.Genossenschaft;
 import at.mgl.position.Mitglied;
 import at.mgl.transaktion.MglTransaktion;
 import at.mgl.transaktion.MglTransaktionsTyp;
-import at.mgl.transaktion.inhalt.MglTransaktionInhaltDouble;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
-import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
+import at.mgl.transaktion.inhalt.MglTransaktionInhaltLocalDate;
 
 public class MitgliedTest {
 	
 	Genossenschaft genossenschaft;
 	Mitglied mitglied;
-	Date datumTest;
+	LocalDate datumTest;
 	
 	@Before
 	public void setUp() {
 		genossenschaft = new Genossenschaft();
 		mitglied = genossenschaft.neuesMitglied();
-		datumTest = new Date(1900,1,1);
+		datumTest = LocalDate.of(1900,1,1);
 	}
 	@After
 	public void cleanUp() {
@@ -162,7 +161,7 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetBeitrittsdatumAndTransaktionPer() {
 		
-		Date beitritt = new Date(2021,04,01);
+		LocalDate beitritt = LocalDate.of(2021,04,01);
 		MglTransaktion t = mitglied.setBeitrittsdatumTransaktionPer(beitritt,datumTest);
 
 		assertEquals("Mitglied Beitrittsdatum wurde nicht gesetzt"
@@ -176,7 +175,7 @@ public class MitgliedTest {
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat nicht den angegebenen Wert " + beitritt
 				,beitritt
-				,((MglTransaktionInhaltDate)t.getMglInhalt()).getInhalt());
+				,((MglTransaktionInhaltLocalDate)t.getMglInhalt()).getInhalt());
 		assertEquals("Transaktion Beitrittsdatum hat nicht das korrekte Datum" + datumTest
 				,datumTest
 				,t.getMglDatumTransaktion());
@@ -184,7 +183,7 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetBeitrittsdatumAndTransaktion() {
 		
-		Date beitritt = new Date(2021,04,01);
+		LocalDate beitritt = LocalDate.of(2021,04,01);
 		MglTransaktion t = mitglied.setBeitrittsdatumTransaktion(beitritt);
 
 		assertEquals("Mitglied Beitrittsdatum wurde nicht gesetzt"
@@ -198,12 +197,12 @@ public class MitgliedTest {
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat nicht den angegebenen Wert " + beitritt
 				,beitritt
-				,((MglTransaktionInhaltDate)t.getMglInhalt()).getInhalt());
+				,((MglTransaktionInhaltLocalDate)t.getMglInhalt()).getInhalt());
 	}
 	@Test
 	public void shouldSetAustrittsdatumAndTransaktionPer() {
 		
-		Date austritt = new Date(2025,05,01);
+		LocalDate austritt = LocalDate.of(2025,05,01);
 		MglTransaktion t = mitglied.setAustrittsdatumTransaktionPer(austritt,datumTest);
 
 		assertEquals("Mitglied Austrittsdatum wurde nicht gesetzt"
@@ -217,7 +216,7 @@ public class MitgliedTest {
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat nicht den angegebenen Wert " + austritt
 				,austritt
-				,((MglTransaktionInhaltDate)t.getMglInhalt()).getInhalt());
+				,((MglTransaktionInhaltLocalDate)t.getMglInhalt()).getInhalt());
 		assertEquals("Transaktion Austrittsdatum hat nicht das korrekte Datum" + datumTest
 				,datumTest
 				,t.getMglDatumTransaktion());
@@ -225,7 +224,7 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetAustrittsdatumAndTransaktion() {
 		
-		Date austritt = new Date(2025,05,01);
+		LocalDate austritt = LocalDate.of(2025,05,01);
 		MglTransaktion t = mitglied.setAustrittsdatumTransaktion(austritt);
 
 		assertEquals("Mitglied Austrittsdatum wurde nicht gesetzt"
@@ -239,7 +238,7 @@ public class MitgliedTest {
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat nicht den angegebenen Wert " + austritt
 				,austritt
-				,((MglTransaktionInhaltDate)t.getMglInhalt()).getInhalt());
+				,((MglTransaktionInhaltLocalDate)t.getMglInhalt()).getInhalt());
 	}
 
 }
