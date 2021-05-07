@@ -11,7 +11,6 @@ import java.util.UUID;
 import at.mgl.transaktion.IMglTransaktion;
 import at.mgl.transaktion.MglTransaktion;
 import at.mgl.transaktion.MglTransaktionFactory;
-import at.mgl.transaktion.MglTransaktionInfo;
 import at.mgl.transaktion.MglTransaktionsTyp;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltDouble;
@@ -24,9 +23,7 @@ public class Genossenschaft implements Position{
 	protected UUID genossenschaftID;
 	
 	/* Variablen mit Genossenschaftsstammdaten*/
-	@MglTransaktionInfo(mglTransaktionstyp = MglTransaktionsTyp.GenBezeichnung)
 	private String bezeichnung;
-	@MglTransaktionInfo(mglTransaktionstyp = MglTransaktionsTyp.GenAnteilshoehe)
 	private double anteilshoehe;
 	
 	/* Liste der Mitglieder zur Genossenschaft */

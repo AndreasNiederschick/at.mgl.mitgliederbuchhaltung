@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import at.mgl.transaktion.MglTransaktion;
 import at.mgl.transaktion.MglTransaktionFactory;
-import at.mgl.transaktion.MglTransaktionInfo;
 import at.mgl.transaktion.MglTransaktionsTyp;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
@@ -22,15 +21,10 @@ public class Mitglied implements Position{
 	private UUID mitgliedID;
 	
 	/* Variablen mit Mitliederstammdaten*/
-	@MglTransaktionInfo(mglTransaktionstyp = MglTransaktionsTyp.MglMitgliedsnummer)
 	private int mitgliedsNummer;
-	@MglTransaktionInfo(mglTransaktionstyp = MglTransaktionsTyp.MglVorname)
 	private String vorname;
-	@MglTransaktionInfo(mglTransaktionstyp = MglTransaktionsTyp.MglNachname)
 	private String nachname;
-	@MglTransaktionInfo(mglTransaktionstyp = MglTransaktionsTyp.MglBeitritt)
 	private Date beitrittsdatum;
-	@MglTransaktionInfo(mglTransaktionstyp = MglTransaktionsTyp.MglAustritt)
 	private Date austrittsdatum;
 
 	

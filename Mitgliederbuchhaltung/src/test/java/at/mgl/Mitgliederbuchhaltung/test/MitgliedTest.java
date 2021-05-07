@@ -44,7 +44,6 @@ public class MitgliedTest {
 	public void shouldSetMglNummerAndTransaktion() {
 		
 		int mitgliedsNummer = 1000;
-		
 		MglTransaktion t = mitglied.setMglNummerTransaktion(1000);
 
 		assertEquals("Mitgliedsnummer wurde nicht gesetzt"
@@ -62,9 +61,9 @@ public class MitgliedTest {
 	}
 	@Test
 	public void shouldSetMglNummerAndTransaktionPer() {
+		
 		int mglNummer = 1000;
 		MglTransaktion t = mitglied.setMitgliedsNummerTransaktionPer(1000,datumTest);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getMglNummer(), 1000);
 
 		assertEquals("Mitgliedsnummer wurde nicht gesetzt"
 				,mglNummer
@@ -84,9 +83,9 @@ public class MitgliedTest {
 	}
 	@Test
 	public void shouldSetVornameAndTransaktionPer() {
+		
 		String name = "Vorname_1";
 		MglTransaktion t = mitglied.setVornameTransaktionPer(name,datumTest);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getVorname(), name);
 
 		assertEquals("Mitglied Vorname wurde nicht gesetzt"
 				,name
@@ -106,9 +105,9 @@ public class MitgliedTest {
 	}
 	@Test
 	public void shouldSetVornameAndTransaktion() {
-		String name = "Vorname_1";
+		
+		String name = "Vorname_1";	
 		MglTransaktion t = mitglied.setVornameTransaktion(name);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getVorname(), name);
 
 		assertEquals("Mitglied Vorname wurde nicht gesetzt"
 				,name
@@ -125,9 +124,9 @@ public class MitgliedTest {
 	}
 	@Test
 	public void shouldSetNachnameAndTransaktionPer() {
+		
 		String nachname = "Nachname_1";
 		MglTransaktion t = mitglied.setNachnameTransaktionPer(nachname,datumTest);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getNachname(), nachname);
 
 		assertEquals("Transaktion Mitglied Nachname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
@@ -145,9 +144,9 @@ public class MitgliedTest {
 	}
 	@Test
 	public void shouldSetNachnameAndTransaktion() {
+		
 		String nachname = "Nachname_1";
 		MglTransaktion t = mitglied.setNachnameTransaktion(nachname);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getNachname(), nachname);
 
 		assertEquals("Transaktion Mitglied Nachname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
@@ -162,9 +161,9 @@ public class MitgliedTest {
 	}
 	@Test
 	public void shouldSetBeitrittsdatumAndTransaktionPer() {
+		
 		Date beitritt = new Date(2021,04,01);
 		MglTransaktion t = mitglied.setBeitrittsdatumTransaktionPer(beitritt,datumTest);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getBeitrittsdatum(), beitritt);
 
 		assertEquals("Mitglied Beitrittsdatum wurde nicht gesetzt"
 				,beitritt
@@ -184,9 +183,9 @@ public class MitgliedTest {
 	}
 	@Test
 	public void shouldSetBeitrittsdatumAndTransaktion() {
+		
 		Date beitritt = new Date(2021,04,01);
 		MglTransaktion t = mitglied.setBeitrittsdatumTransaktion(beitritt);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getBeitrittsdatum(), beitritt);
 
 		assertEquals("Mitglied Beitrittsdatum wurde nicht gesetzt"
 				,beitritt
@@ -203,9 +202,9 @@ public class MitgliedTest {
 	}
 	@Test
 	public void shouldSetAustrittsdatumAndTransaktionPer() {
+		
 		Date austritt = new Date(2025,05,01);
 		MglTransaktion t = mitglied.setAustrittsdatumTransaktionPer(austritt,datumTest);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getAustrittsdatum(), austritt);
 
 		assertEquals("Mitglied Austrittsdatum wurde nicht gesetzt"
 				,austritt
@@ -225,9 +224,9 @@ public class MitgliedTest {
 	}
 	@Test
 	public void shouldSetAustrittsdatumAndTransaktion() {
+		
 		Date austritt = new Date(2025,05,01);
 		MglTransaktion t = mitglied.setAustrittsdatumTransaktion(austritt);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getAustrittsdatum(), austritt);
 
 		assertEquals("Mitglied Austrittsdatum wurde nicht gesetzt"
 				,austritt
