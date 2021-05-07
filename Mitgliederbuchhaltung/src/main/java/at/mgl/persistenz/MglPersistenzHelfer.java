@@ -72,8 +72,8 @@ public class MglPersistenzHelfer {
 		Mitglied mgl = gen.getMitglieder().get(t.getMglMitgliedID());
 		
 		ret = mgl.getAnteile().computeIfAbsent(t.getMglAnteilID(),Anteilsblock::new);
-		ret.setGen(gen);
-		ret.setMgl(mgl);
+		ret.setGenossenschaft(gen);
+		ret.setMitglied(mgl);
 		ret.getTransaktionen().add(t);
 		
 		return ret;

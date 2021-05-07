@@ -19,14 +19,14 @@ import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
 
 public class MitgliedTest {
 	
-	Genossenschaft gen;
-	Mitglied mgl;
+	Genossenschaft genossenschaft;
+	Mitglied mitglied;
 	Date datumTest;
 	
 	@Before
 	public void setUp() {
-		gen = new Genossenschaft();
-		mgl = gen.neuesMitglied();
+		genossenschaft = new Genossenschaft();
+		mitglied = genossenschaft.neuesMitglied();
 		datumTest = new Date(1900,1,1);
 	}
 	@After
@@ -42,35 +42,36 @@ public class MitgliedTest {
 		
 	@Test
 	public void shouldSetMglNummerAndTransaktion() {
-		int mglNummer = 1000;
-		MglTransaktion t = mgl.setMglNummerTransaktion(1000);
-		//MglTransaktion t = mgl.setMitTransaktion(mgl.getMglNummer(), 1000);
+		
+		int mitgliedsNummer = 1000;
+		
+		MglTransaktion t = mitglied.setMglNummerTransaktion(1000);
 
 		assertEquals("Mitgliedsnummer wurde nicht gesetzt"
-				,mglNummer
-				, mgl.getMglNummer());
+				,mitgliedsNummer
+				, mitglied.getMitgliedsNummer());
 		assertEquals("Transaktion Mitgliedsnummer wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitgliedsnummer hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglMitgliedsnummer
 				,t.getMglTransaktionsTyp());
-		assertEquals("Transaktion Mitgliedsnummer hat nicht den angegebenen Wert " + mglNummer
-				,mglNummer
+		assertEquals("Transaktion Mitgliedsnummer hat nicht den angegebenen Wert " + mitgliedsNummer
+				,mitgliedsNummer
 				,((MglTransaktionInhaltInteger)t.getMglInhalt()).getInhalt());
 	}
 	@Test
 	public void shouldSetMglNummerAndTransaktionPer() {
 		int mglNummer = 1000;
-		MglTransaktion t = mgl.setMglNummerTransaktionPer(1000,datumTest);
+		MglTransaktion t = mitglied.setMitgliedsNummerTransaktionPer(1000,datumTest);
 		//MglTransaktion t = mgl.setMitTransaktion(mgl.getMglNummer(), 1000);
 
 		assertEquals("Mitgliedsnummer wurde nicht gesetzt"
 				,mglNummer
-				, mgl.getMglNummer());
+				, mitglied.getMitgliedsNummer());
 		assertEquals("Transaktion Mitgliedsnummer wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitgliedsnummer hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglMitgliedsnummer
 				,t.getMglTransaktionsTyp());
@@ -84,15 +85,15 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetVornameAndTransaktionPer() {
 		String name = "Vorname_1";
-		MglTransaktion t = mgl.setVornameTransaktionPer(name,datumTest);
+		MglTransaktion t = mitglied.setVornameTransaktionPer(name,datumTest);
 		//MglTransaktion t = mgl.setMitTransaktion(mgl.getVorname(), name);
 
 		assertEquals("Mitglied Vorname wurde nicht gesetzt"
 				,name
-				, mgl.getVorname());
+				, mitglied.getVorname());
 		assertEquals("Transaktion Mitglied Vorname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Vorname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglVorname
 				,t.getMglTransaktionsTyp());
@@ -106,15 +107,15 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetVornameAndTransaktion() {
 		String name = "Vorname_1";
-		MglTransaktion t = mgl.setVornameTransaktion(name);
+		MglTransaktion t = mitglied.setVornameTransaktion(name);
 		//MglTransaktion t = mgl.setMitTransaktion(mgl.getVorname(), name);
 
 		assertEquals("Mitglied Vorname wurde nicht gesetzt"
 				,name
-				, mgl.getVorname());
+				, mitglied.getVorname());
 		assertEquals("Transaktion Mitglied Vorname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Vorname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglVorname
 				,t.getMglTransaktionsTyp());
@@ -125,12 +126,12 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetNachnameAndTransaktionPer() {
 		String nachname = "Nachname_1";
-		MglTransaktion t = mgl.setNachnameTransaktionPer(nachname,datumTest);
+		MglTransaktion t = mitglied.setNachnameTransaktionPer(nachname,datumTest);
 		//MglTransaktion t = mgl.setMitTransaktion(mgl.getNachname(), nachname);
 
 		assertEquals("Transaktion Mitglied Nachname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Nachname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglNachname
 				,t.getMglTransaktionsTyp());
@@ -145,12 +146,12 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetNachnameAndTransaktion() {
 		String nachname = "Nachname_1";
-		MglTransaktion t = mgl.setNachnameTransaktion(nachname);
+		MglTransaktion t = mitglied.setNachnameTransaktion(nachname);
 		//MglTransaktion t = mgl.setMitTransaktion(mgl.getNachname(), nachname);
 
 		assertEquals("Transaktion Mitglied Nachname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Nachname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglNachname
 				,t.getMglTransaktionsTyp());
@@ -162,15 +163,15 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetBeitrittsdatumAndTransaktionPer() {
 		Date beitritt = new Date(2021,04,01);
-		MglTransaktion t = mgl.setBeitrittsdatumTransaktionPer(beitritt,datumTest);
+		MglTransaktion t = mitglied.setBeitrittsdatumTransaktionPer(beitritt,datumTest);
 		//MglTransaktion t = mgl.setMitTransaktion(mgl.getBeitrittsdatum(), beitritt);
 
 		assertEquals("Mitglied Beitrittsdatum wurde nicht gesetzt"
 				,beitritt
-				, mgl.getBeitrittsdatum());
+				, mitglied.getBeitrittsdatum());
 		assertEquals("Transaktion Mitglied Beitrittsdatum wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglBeitritt
 				,t.getMglTransaktionsTyp());
@@ -184,15 +185,15 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetBeitrittsdatumAndTransaktion() {
 		Date beitritt = new Date(2021,04,01);
-		MglTransaktion t = mgl.setBeitrittsdatumTransaktion(beitritt);
+		MglTransaktion t = mitglied.setBeitrittsdatumTransaktion(beitritt);
 		//MglTransaktion t = mgl.setMitTransaktion(mgl.getBeitrittsdatum(), beitritt);
 
 		assertEquals("Mitglied Beitrittsdatum wurde nicht gesetzt"
 				,beitritt
-				, mgl.getBeitrittsdatum());
+				, mitglied.getBeitrittsdatum());
 		assertEquals("Transaktion Mitglied Beitrittsdatum wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglBeitritt
 				,t.getMglTransaktionsTyp());
@@ -203,15 +204,15 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetAustrittsdatumAndTransaktionPer() {
 		Date austritt = new Date(2025,05,01);
-		MglTransaktion t = mgl.setAustrittsdatumTransaktionPer(austritt,datumTest);
+		MglTransaktion t = mitglied.setAustrittsdatumTransaktionPer(austritt,datumTest);
 		//MglTransaktion t = mgl.setMitTransaktion(mgl.getAustrittsdatum(), austritt);
 
 		assertEquals("Mitglied Austrittsdatum wurde nicht gesetzt"
 				,austritt
-				, mgl.getAustrittsdatum());
+				, mitglied.getAustrittsdatum());
 		assertEquals("Transaktion Mitglied Austrittsdatum wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglAustritt
 				,t.getMglTransaktionsTyp());
@@ -225,15 +226,15 @@ public class MitgliedTest {
 	@Test
 	public void shouldSetAustrittsdatumAndTransaktion() {
 		Date austritt = new Date(2025,05,01);
-		MglTransaktion t = mgl.setAustrittsdatumTransaktion(austritt);
+		MglTransaktion t = mitglied.setAustrittsdatumTransaktion(austritt);
 		//MglTransaktion t = mgl.setMitTransaktion(mgl.getAustrittsdatum(), austritt);
 
 		assertEquals("Mitglied Austrittsdatum wurde nicht gesetzt"
 				,austritt
-				, mgl.getAustrittsdatum());
+				, mitglied.getAustrittsdatum());
 		assertEquals("Transaktion Mitglied Austrittsdatum wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,mgl.getTransaktionen().size());
+				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MglAustritt
 				,t.getMglTransaktionsTyp());

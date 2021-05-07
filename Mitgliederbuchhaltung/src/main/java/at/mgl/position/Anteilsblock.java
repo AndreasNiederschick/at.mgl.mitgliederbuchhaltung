@@ -16,9 +16,9 @@ import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 
 public class Anteilsblock implements Position {
 	
-	private Genossenschaft gen;
-	private Mitglied mgl;
-	private UUID mglAnteilID;
+	private Genossenschaft genossenschaft;
+	private Mitglied mitglied;
+	private UUID mglAnteilsblockID;
 	
 	private Timestamp tstZeichnung;
 	private Timestamp tstKuendigung;
@@ -36,11 +36,11 @@ public class Anteilsblock implements Position {
 	/* Liste der Transaktionen zum Anteil */
 	private List<MglTransaktion> transaktionen;
 	
-	public Anteilsblock(Genossenschaft gen, Mitglied mgl) {
+	public Anteilsblock(Genossenschaft genossenschaft, Mitglied mitglied) {
 		super();
-		this.gen = gen;
-		this.mgl = mgl;
-		this.mglAnteilID = UUID.randomUUID();
+		this.genossenschaft = genossenschaft;
+		this.mitglied = mitglied;
+		this.mglAnteilsblockID = UUID.randomUUID();
 		this.tstZeichnung = null;
 		this.tstKuendigung = null;
 		this.tstAuszahlungssperrfrist = null;
@@ -53,11 +53,11 @@ public class Anteilsblock implements Position {
 		this.transaktionen = new ArrayList<MglTransaktion>();
 		}
 	
-	public Anteilsblock(UUID anteilID) {
+	public Anteilsblock(UUID anteilsblockID) {
 		super();
-		this.gen = null;
-		this.mgl = null;
-		this.mglAnteilID = anteilID;
+		this.genossenschaft = null;
+		this.mitglied = null;
+		this.mglAnteilsblockID = anteilsblockID;
 		this.tstZeichnung = null;
 		this.tstKuendigung = null;
 		this.tstAuszahlungssperrfrist = null;
@@ -71,11 +71,11 @@ public class Anteilsblock implements Position {
 		}
 	
 	
-	public Anteilsblock(Genossenschaft gen, Mitglied mgl, UUID anteilID) {
+	public Anteilsblock(Genossenschaft genossenschaft, Mitglied mitglied, UUID anteilsblockID) {
 		super();
-		this.gen = gen;
-		this.mgl = mgl;
-		this.mglAnteilID = anteilID;
+		this.genossenschaft = genossenschaft;
+		this.mitglied = mitglied;
+		this.mglAnteilsblockID = anteilsblockID;
 		this.tstZeichnung = null;
 		this.tstKuendigung = null;
 		this.tstAuszahlungssperrfrist = null;
@@ -89,11 +89,19 @@ public class Anteilsblock implements Position {
 		}
 	
 	public MglTransaktion zeichnen (Date mglDatumTransaktion,IMglTransaktionInhalt mglInhalt) {
+		
 		MglTransaktion ret = null;
+		
 		if (this.zustand != this.zustand.naechsterStatus(MglTransaktionsTyp.Zeichnung, false)) {
 			
 			//Transaktion erzeugen und in die Liste einhängen
-			ret = MglTransaktionFactory.erstelleTransaktion(this.gen.getGenossenschaftID(), this.mgl.getMglMitgliedID(), this.getMglAnteilID(), mglDatumTransaktion, MglTransaktionsTyp.Zeichnung, mglInhalt);
+			ret = MglTransaktionFactory.erstelleTransaktion(
+					this.genossenschaft.getGenossenschaftID()
+					,this.mitglied.getMitgliedID()
+					,this.getMglAnteilsblockID()
+					,mglDatumTransaktion
+					,MglTransaktionsTyp.Zeichnung
+					,mglInhalt);
 			
 			//Zustand und Werte am Anteilsblock verändern
 			this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Zeichnung, false);
@@ -108,11 +116,19 @@ public class Anteilsblock implements Position {
 	}
 	
 	public MglTransaktion kuendigen (Date mglDatumTransaktion) {
+		
 		MglTransaktion ret = null;
+		
 		if (this.zustand != this.zustand.naechsterStatus(MglTransaktionsTyp.Kuendigung, false)) {
 			
 			//Transaktion erzeugen und in die Liste einhängen
-			ret = MglTransaktionFactory.erstelleTransaktion(this.gen.getGenossenschaftID(), this.mgl.getMglMitgliedID(), this.getMglAnteilID(), mglDatumTransaktion, MglTransaktionsTyp.Kuendigung, new MglTransaktionInhaltInteger(this.menge));
+			ret = MglTransaktionFactory.erstelleTransaktion(
+					this.genossenschaft.getGenossenschaftID()
+					,this.mitglied.getMitgliedID()
+					,this.getMglAnteilsblockID()
+					,mglDatumTransaktion
+					,MglTransaktionsTyp.Kuendigung
+					,new MglTransaktionInhaltInteger(this.menge));
 					
 			//Zustand und Werte am Anteilsblock verändern
 			this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Kuendigung, false);
@@ -126,11 +142,19 @@ public class Anteilsblock implements Position {
 	}
 	
 	public MglTransaktion auszahlungssperrfrist (Date mglDatumTransaktion) {
+		
 		MglTransaktion ret = null;
+		
 		if (this.zustand != this.zustand.naechsterStatus(MglTransaktionsTyp.Auszahlungssperrfrist, false)) {
 			
 			//Transaktion erzeugen und in die Liste einhängen
-			ret = MglTransaktionFactory.erstelleTransaktion(this.gen.getGenossenschaftID(), this.mgl.getMglMitgliedID(), this.getMglAnteilID(), mglDatumTransaktion, MglTransaktionsTyp.Auszahlungssperrfrist, new MglTransaktionInhaltInteger(this.menge));
+			ret = MglTransaktionFactory.erstelleTransaktion(
+					this.genossenschaft.getGenossenschaftID(),
+					this.mitglied.getMitgliedID()
+					,this.getMglAnteilsblockID()
+					,mglDatumTransaktion
+					,MglTransaktionsTyp.Auszahlungssperrfrist
+					,new MglTransaktionInhaltInteger(this.menge));
 					
 			//Zustand und Werte am Anteilsblock verändern
 			this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Auszahlungssperrfrist, false);
@@ -145,11 +169,19 @@ public class Anteilsblock implements Position {
 	}
 
 	public MglTransaktion auszahlen(Date mglDatumTransaktion) {
+		
 		MglTransaktion ret = null;
+		
 		if (this.zustand != this.zustand.naechsterStatus(MglTransaktionsTyp.Auszahlung, false)) {
 			
 			//Transaktion erzeugen und in die Liste einhängen
-			ret = MglTransaktionFactory.erstelleTransaktion(this.gen.getGenossenschaftID(), this.mgl.getMglMitgliedID(), this.getMglAnteilID(), mglDatumTransaktion, MglTransaktionsTyp.Auszahlung, new MglTransaktionInhaltInteger(this.menge));
+			ret = MglTransaktionFactory.erstelleTransaktion(
+					this.genossenschaft.getGenossenschaftID()
+					,this.mitglied.getMitgliedID()
+					,this.getMglAnteilsblockID()
+					,mglDatumTransaktion
+					,MglTransaktionsTyp.Auszahlung
+					,new MglTransaktionInhaltInteger(this.menge));
 							
 			//Zustand und Werte am Anteilsblock verändern
 			this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Auszahlung, false);
@@ -164,7 +196,9 @@ public class Anteilsblock implements Position {
 	}
 	
 	public MglTransaktion stornieren (MglTransaktion mglTransaktion) {
+		
 		MglTransaktion ret = null;
+		
 		if (mglTransaktion != null
 				&& !mglTransaktion.isIstStornoTransaktion()
 				&& this.zustand != this.zustand.naechsterStatus(mglTransaktion.getMglTransaktionsTyp(), true)
@@ -191,9 +225,13 @@ public class Anteilsblock implements Position {
 	
 	@Override
 	public void aufrollenPer(Date datumPer) {
+		
 		for (MglTransaktion mglTransaktion : this.transaktionen) {
+			
 			if (mglTransaktion.getMglDatumTransaktion().before(datumPer)) {
+				
 				switch(mglTransaktion.getMglTransaktionsTyp()) {
+				
 				case Zeichnung:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Zeichnung, true);
@@ -205,6 +243,7 @@ public class Anteilsblock implements Position {
 						this.tstZeichnung = mglTransaktion.getMglTstAngelegt();
 					}
 					break;
+				
 				case Kuendigung:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Kuendigung, true);
@@ -214,6 +253,7 @@ public class Anteilsblock implements Position {
 						this.tstKuendigung = mglTransaktion.getMglTstAngelegt();
 					}
 					break;
+				
 				case Auszahlungssperrfrist:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Auszahlungssperrfrist, true);
@@ -223,6 +263,7 @@ public class Anteilsblock implements Position {
 						this.tstAuszahlungssperrfrist = mglTransaktion.getMglTstAngelegt();
 					}
 					break;
+				
 				case Auszahlung:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Auszahlung, true);
@@ -234,22 +275,20 @@ public class Anteilsblock implements Position {
 					break;
 				default: break;
 				}	
-			}
-				
+			}		
 		}
-		
 	}
 	
 	public void printAnteilsblock () {
-		System.out.println("###Anteil: " + this.getMglAnteilID() + " #Zustand " + this.zustand + " #Menge " + this.menge + " #Eingezahlt " + this.eingezahlt + " #Anteilshöhe " + this.anteilshoehe + " #HatHaftung " + this.hatHaftung);
+		System.out.println("###Anteil: " + this.getMglAnteilsblockID() + " #Zustand " + this.zustand + " #Menge " + this.menge + " #Eingezahlt " + this.eingezahlt + " #Anteilshöhe " + this.anteilshoehe + " #HatHaftung " + this.hatHaftung);
 	}
 
-	public UUID getMglAnteilID() {
-		return mglAnteilID;
+	public UUID getMglAnteilsblockID() {
+		return mglAnteilsblockID;
 	}
 
-	public void setMglAnteilID(UUID mglAnteilID) {
-		this.mglAnteilID = mglAnteilID;
+	public void setMglAnteilsblockID(UUID mglAnteilID) {
+		this.mglAnteilsblockID = mglAnteilID;
 	}
 
 	public Timestamp getTstZeichnung() {
@@ -308,20 +347,20 @@ public class Anteilsblock implements Position {
 		this.hatHaftung = hatHaftung;
 	}
 
-	public Genossenschaft getGen() {
-		return gen;
+	public Genossenschaft getGenossenschaft() {
+		return genossenschaft;
 	}
 
-	public void setGen(Genossenschaft gen) {
-		this.gen = gen;
+	public void setGenossenschaft(Genossenschaft genossenschaft) {
+		this.genossenschaft = genossenschaft;
 	}
 
-	public Mitglied getMgl() {
-		return mgl;
+	public Mitglied getMitglied() {
+		return mitglied;
 	}
 
-	public void setMgl(Mitglied mgl) {
-		this.mgl = mgl;
+	public void setMitglied(Mitglied mitglied) {
+		this.mitglied = mitglied;
 	}
 
 	public Timestamp getTstAuszahlung() {

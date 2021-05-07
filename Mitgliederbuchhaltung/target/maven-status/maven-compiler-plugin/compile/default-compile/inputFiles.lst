@@ -15,7 +15,6 @@
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/inhalt/IMglTransaktionInhalt.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/inhalt/MglTransaktionInhaltDate.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/inhalt/MglTransaktionInhaltDouble.java
-/home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/position/IPosition.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/position/Anteilsblock.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/position/Position.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/MglTransaktionFactory.java

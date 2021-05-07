@@ -52,7 +52,7 @@ public class App
         
         genList.stream().forEach(g -> g.getMitgliederListe()
         		.stream()
-        		.forEach(m -> { System.out.println("Mitglied " + m.getMglMitgliedID() + " " + m.getVorname()); }))
+        		.forEach(m -> { System.out.println("Mitglied " + m.getMitgliedID() + " " + m.getVorname()); }))
         		;
         /*
         genList.stream().forEach(g -> g.getMitgliederListe().stream()

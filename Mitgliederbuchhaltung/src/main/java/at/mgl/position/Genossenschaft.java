@@ -63,18 +63,18 @@ public class Genossenschaft implements Position{
 	
 	public Mitglied neuesMitglied() {
 		Mitglied ret = new Mitglied(this,UUID.randomUUID());
-		this.mitglieder.put(ret.getMglMitgliedID(),ret);
+		this.mitglieder.put(ret.getMitgliedID(),ret);
 		return ret;
 	}
 	
 	public Mitglied neuesMitglied(UUID mglID) {
 		Mitglied ret = new Mitglied(this,mglID);
-		this.mitglieder.put(ret.getMglMitgliedID(),ret);
+		this.mitglieder.put(ret.getMitgliedID(),ret);
 		return ret;
 	}
 	
 	public boolean addMitglied (Mitglied mgl) {
-		this.mitglieder.put(mgl.getMglMitgliedID(),mgl);
+		this.mitglieder.put(mgl.getMitgliedID(),mgl);
 		return true;
 	}
 	
