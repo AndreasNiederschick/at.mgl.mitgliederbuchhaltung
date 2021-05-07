@@ -15,7 +15,7 @@ import at.mgl.transaktion.inhalt.MglTransaktionInhaltDate;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 
-public class Mitglied extends Position implements IPosition{
+public class Mitglied implements Position{
 	
 	/* Variablen zum festschreiben von Systemereignissen */
 	private Genossenschaft gen;
