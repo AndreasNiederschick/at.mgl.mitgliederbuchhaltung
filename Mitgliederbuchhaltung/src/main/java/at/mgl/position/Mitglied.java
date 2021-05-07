@@ -17,65 +17,41 @@ import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 public class Mitglied implements Position{
 	
 	/* Variablen zum festschreiben von Systemereignissen */
-	private Genossenschaft genossenschaft;
-	private UUID mitgliedID;
+	private Genossenschaft genossenschaft = null;
+	private UUID mitgliedID = null;
 	
 	/* Variablen mit Mitliederstammdaten*/
-	private int mitgliedsNummer;
-	private String vorname;
-	private String nachname;
-	private Date beitrittsdatum;
-	private Date austrittsdatum;
+	private int mitgliedsNummer = 0;
+	private String vorname = "";
+	private String nachname = "";
+	private Date beitrittsdatum = new Date(1800,1,1);
+	private Date austrittsdatum = new Date(1800,1,1);
 
 	
 	/* Liste der Anteile zum Miglied */
 	//private List<Anteilsblock> anteile;
-	private Map<UUID,Anteilsblock> anteilsbloecke;
+	private Map<UUID,Anteilsblock> anteilsbloecke = new HashMap<UUID,Anteilsblock>();
 	
 	/* Liste der Transaktionen zum Mitglied */
-	private List<MglTransaktion> transaktionen;
+	private List<MglTransaktion> transaktionen = new ArrayList<MglTransaktion>();
 	
 	// ---------------------------------------------------------------------------------
 	// Konstruktoren 
 	// ---------------------------------------------------------------------------------
 	
 	public Mitglied(Genossenschaft genossenschaft) {
-		super();
 		this.genossenschaft = genossenschaft;
 		this.mitgliedID = UUID.randomUUID();
-		this.anteilsbloecke = new HashMap<UUID,Anteilsblock>();
-		this.transaktionen = new ArrayList<MglTransaktion>();
-		this.mitgliedsNummer = 0;
-		this.vorname = "";
-		this.nachname = "";
-		this.beitrittsdatum = new Date(1800,1,1);
-		this.austrittsdatum = new Date(1800,1,1);
 	}
 	
 	public Mitglied(UUID mitgliedID) {
-		super();
 		this.genossenschaft = null;
 		this.mitgliedID = mitgliedID;
-		this.anteilsbloecke = new HashMap<UUID,Anteilsblock>();
-		this.transaktionen = new ArrayList<MglTransaktion>();
-		this.mitgliedsNummer = 0;
-		this.vorname = "";
-		this.nachname = "";
-		this.beitrittsdatum = new Date(1800,1,1);
-		this.austrittsdatum = new Date(1800,1,1);
 	}
 	
 	public Mitglied(Genossenschaft gen,UUID mitgliedID) {
-		super();
 		this.genossenschaft = gen;
 		this.mitgliedID = mitgliedID;
-		this.anteilsbloecke = new HashMap<UUID,Anteilsblock>();
-		this.transaktionen = new ArrayList<MglTransaktion>();
-		this.mitgliedsNummer = 0;
-		this.vorname = "";
-		this.nachname = "";
-		this.beitrittsdatum = new Date(1800,1,1);
-		this.austrittsdatum = new Date(1800,1,1);
 	}
 	
 	// Methoden aus Interface IPosition

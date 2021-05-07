@@ -16,59 +16,37 @@ import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 
 public class Anteilsblock implements Position {
 	
-	private Genossenschaft genossenschaft;
-	private Mitglied mitglied;
-	private UUID mglAnteilsblockID;
+	private Genossenschaft genossenschaft = null;
+	private Mitglied mitglied = null;
+	private UUID mglAnteilsblockID = null;
 	
-	private Timestamp tstZeichnung;
-	private Timestamp tstKuendigung;
-	private Timestamp tstAuszahlungssperrfrist;
-	private Timestamp tstAuszahlung;
+	private Timestamp tstZeichnung = null;
+	private Timestamp tstKuendigung = null;
+	private Timestamp tstAuszahlungssperrfrist = null;
+	private Timestamp tstAuszahlung = null;
 	
-	private ZustandAnteilsblock zustand;
+	private ZustandAnteilsblock zustand = ZustandAnteilsblock.Start;
 	
-	private int menge;
+	private int menge = 0;
 
-	private long anteilshoehe;
-	private long eingezahlt;
-	private boolean hatHaftung;
+	private long anteilshoehe = 0;
+	private long eingezahlt = 0;
+	private boolean hatHaftung = false;
 	
 	/* Liste der Transaktionen zum Anteil */
-	private List<MglTransaktion> transaktionen;
+	private List<MglTransaktion> transaktionen = new ArrayList<MglTransaktion>();
 	
 	public Anteilsblock(Genossenschaft genossenschaft, Mitglied mitglied) {
-		super();
 		this.genossenschaft = genossenschaft;
 		this.mitglied = mitglied;
 		this.mglAnteilsblockID = UUID.randomUUID();
-		this.tstZeichnung = null;
-		this.tstKuendigung = null;
-		this.tstAuszahlungssperrfrist = null;
-		this.tstAuszahlung = null;
-		this.menge = 0;
-		this.zustand = ZustandAnteilsblock.Start;
-		this.anteilshoehe = 0;
-		this.eingezahlt = 0;
-		this.hatHaftung = false;
-		this.transaktionen = new ArrayList<MglTransaktion>();
-		}
+	}
 	
 	public Anteilsblock(UUID anteilsblockID) {
-		super();
 		this.genossenschaft = null;
 		this.mitglied = null;
 		this.mglAnteilsblockID = anteilsblockID;
-		this.tstZeichnung = null;
-		this.tstKuendigung = null;
-		this.tstAuszahlungssperrfrist = null;
-		this.tstAuszahlung = null;
-		this.menge = 0;
-		this.zustand = ZustandAnteilsblock.Start;
-		this.anteilshoehe = 0;
-		this.eingezahlt = 0;
-		this.hatHaftung = false;
-		this.transaktionen = new ArrayList<MglTransaktion>();
-		}
+	}
 	
 	
 	public Anteilsblock(Genossenschaft genossenschaft, Mitglied mitglied, UUID anteilsblockID) {
@@ -76,17 +54,7 @@ public class Anteilsblock implements Position {
 		this.genossenschaft = genossenschaft;
 		this.mitglied = mitglied;
 		this.mglAnteilsblockID = anteilsblockID;
-		this.tstZeichnung = null;
-		this.tstKuendigung = null;
-		this.tstAuszahlungssperrfrist = null;
-		this.tstAuszahlung = null;
-		this.menge = 0;
-		this.zustand = ZustandAnteilsblock.Start;
-		this.anteilshoehe = 0;
-		this.eingezahlt = 0;
-		this.hatHaftung = false;
-		this.transaktionen = new ArrayList<MglTransaktion>();
-		}
+	}
 	
 	public MglTransaktion zeichnen (Date mglDatumTransaktion,IMglTransaktionInhalt mglInhalt) {
 		
