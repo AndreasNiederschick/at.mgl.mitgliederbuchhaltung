@@ -53,7 +53,7 @@ public class MitgliedTest {
 				,mitgliedsNummer
 				, mitglied.getMitgliedsNummer());
 		assertEquals("Transaktion Mitgliedsnummer wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitgliedsnummer hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedMitgliedsnummer
@@ -72,7 +72,7 @@ public class MitgliedTest {
 				,mglNummer
 				, mitglied.getMitgliedsNummer());
 		assertEquals("Transaktion Mitgliedsnummer wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitgliedsnummer hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedMitgliedsnummer
@@ -94,7 +94,7 @@ public class MitgliedTest {
 				,name
 				, mitglied.getVorname());
 		assertEquals("Transaktion Mitglied Vorname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Vorname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedVorname
@@ -116,7 +116,7 @@ public class MitgliedTest {
 				,name
 				, mitglied.getVorname());
 		assertEquals("Transaktion Mitglied Vorname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Vorname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedVorname
@@ -132,7 +132,7 @@ public class MitgliedTest {
 		MglTransaktion t = mitglied.setNachnameTransaktionPer(nachname,datumTest);
 
 		assertEquals("Transaktion Mitglied Nachname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Nachname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedNachname
@@ -152,7 +152,7 @@ public class MitgliedTest {
 		MglTransaktion t = mitglied.setNachnameTransaktion(nachname);
 
 		assertEquals("Transaktion Mitglied Nachname wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Nachname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedNachname
@@ -172,7 +172,7 @@ public class MitgliedTest {
 				,beitritt
 				, mitglied.getBeitrittsdatum());
 		assertEquals("Transaktion Mitglied Beitrittsdatum wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedBeitritt
@@ -194,7 +194,7 @@ public class MitgliedTest {
 				,beitritt
 				, mitglied.getBeitrittsdatum());
 		assertEquals("Transaktion Mitglied Beitrittsdatum wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedBeitritt
@@ -213,7 +213,7 @@ public class MitgliedTest {
 				,austritt
 				, mitglied.getAustrittsdatum());
 		assertEquals("Transaktion Mitglied Austrittsdatum wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedAustritt
@@ -235,7 +235,7 @@ public class MitgliedTest {
 				,austritt
 				, mitglied.getAustrittsdatum());
 		assertEquals("Transaktion Mitglied Austrittsdatum wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.MitgliedAustritt

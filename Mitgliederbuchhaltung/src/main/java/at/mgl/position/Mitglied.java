@@ -125,6 +125,21 @@ public class Mitglied implements Position{
 		return new ArrayList<Anteilsblock>(this.anteilsbloecke.values());
 	}
 	
+	public MglTransaktion  mitgliedAnlegenTransaktion(LocalDate datum)  {
+		
+		MglTransaktion ret = MglTransaktionFactory.erstelleTransaktionMitglied (
+				this.genossenschaft.getGenossenschaftID()
+				,this.mitgliedID
+				,datum
+				,MglTransaktionsTyp.MitgliedAnlage
+				,new MglTransaktionInhaltString(this.mitgliedID.toString())
+				,this.doPersist);
+		
+		this.transaktionen.add(ret);
+		
+		return ret;
+	}
+	
 	// GETTER & SETTER die Transaktionen erstellen	
 	public MglTransaktion setMitgliedsNummerTransaktionPer(int mitgliedsNummer, LocalDate datum) {
 		
@@ -238,17 +253,18 @@ public class Mitglied implements Position{
 	
 	public Anteilsblock neuerAnteilsblock () {
 		
-		Anteilsblock ret = new Anteilsblock(genossenschaft, this);
-		
-		this.anteilsbloecke.put(ret.getMglAnteilsblockID(),ret);
-		
-		return ret;
+		return this.neuerAnteilsblock(UUID.randomUUID());
 	}
 	public Anteilsblock neuerAnteilsblock (UUID anteilID) {
 		
 		Anteilsblock ret = new Anteilsblock(genossenschaft, this, anteilID);
 		
 		this.anteilsbloecke.put(ret.getMglAnteilsblockID(),ret);
+		
+		if(!this.doPersist) {
+			ret.setDoPersist(this.doPersist);
+			ret.anteilsblockAnlegenTransaktion(LocalDate.now());
+		}
 		
 		return ret;
 	}

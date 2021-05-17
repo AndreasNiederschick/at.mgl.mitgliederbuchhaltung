@@ -26,46 +26,46 @@ public class TestSzenario {
 	 */
 	public static Genossenschaft szenarioStandard() {
 		
-        Genossenschaft gen = new Genossenschaft();
-        gen.setBezeichnungTransaktion("Test Genossenschaft szenarioStandard");
-        gen.setAnteilshoeheTransaktion(10.0);
+        Genossenschaft genossenschaft = new Genossenschaft();
+        genossenschaft.genossenschaftAnlegenTransaktion(LocalDate.now());
+        genossenschaft.setBezeichnungTransaktion("Test Genossenschaft szenarioStandard");
+        genossenschaft.setAnteilshoeheTransaktion(10.0);
 		
-		Mitglied mgl1 = new Mitglied (gen,UUID.randomUUID());
-		gen.addMitglied(mgl1);
-		mgl1.setMglNummerTransaktion(1);
-		mgl1.setBeitrittsdatumTransaktion(LocalDate.of(2020,01,01));
-		mgl1.setBeitrittsdatumTransaktion(LocalDate.of(2020,11,11));
-		mgl1.setAustrittsdatum(LocalDate.of(2021,12,12));
-		mgl1.setVornameTransaktion("MGL1_Vorname");
-		mgl1.setNachnameTransaktion("MGL1_Nachname");
+        Mitglied mitglied1 = genossenschaft.neuesMitglied();
+		mitglied1.setMglNummerTransaktion(1);
+		mitglied1.setBeitrittsdatumTransaktion(LocalDate.of(2020,01,01));
+		mitglied1.setBeitrittsdatumTransaktion(LocalDate.of(2020,11,11));
+		mitglied1.setAustrittsdatum(LocalDate.of(2021,12,12));
+		mitglied1.setVornameTransaktion("MGL1_Vorname");
+		mitglied1.setNachnameTransaktion("MGL1_Nachname");
 		
-		Anteilsblock ant1 = mgl1.neuerAnteilsblock();
+		Anteilsblock anteilsblock1 = mitglied1.neuerAnteilsblock();
 		
-		ant1.zeichnen(LocalDate.of(2021,04,01), new MglTransaktionInhaltInteger(4));
-		ant1.zeichnen(LocalDate.of(2021,04,02), new MglTransaktionInhaltInteger(5));
+		anteilsblock1.zeichnen(LocalDate.of(2021,04,01), new MglTransaktionInhaltInteger(4));
+		anteilsblock1.zeichnen(LocalDate.of(2021,04,02), new MglTransaktionInhaltInteger(5));
 		
-		ant1.kuendigen(LocalDate.of(2021,04,10));
-		ant1.kuendigen(LocalDate.of(2021,04,11));
+		anteilsblock1.kuendigen(LocalDate.of(2021,04,10));
+		anteilsblock1.kuendigen(LocalDate.of(2021,04,11));
 		
-		MglTransaktion t = ant1.auszahlungssperrfrist(LocalDate.of(2021,04,20));
+		MglTransaktion t = anteilsblock1.auszahlungssperrfrist(LocalDate.of(2021,04,20));
 		
-		ant1.stornieren(t);
+		anteilsblock1.stornieren(t);
 		
-		ant1.auszahlungssperrfrist(LocalDate.of(2021,04,20));
-		ant1.auszahlen(LocalDate.of(2021,04,30));
-		ant1.auszahlen(LocalDate.of(2021,04,29));
-		ant1.zeichnen(LocalDate.of(2021,04,28), new MglTransaktionInhaltInteger(3));
+		anteilsblock1.auszahlungssperrfrist(LocalDate.of(2021,04,20));
+		anteilsblock1.auszahlen(LocalDate.of(2021,04,30));
+		anteilsblock1.auszahlen(LocalDate.of(2021,04,29));
+		anteilsblock1.zeichnen(LocalDate.of(2021,04,28), new MglTransaktionInhaltInteger(3));
 			
-		ant1.aufrollen();
+		anteilsblock1.aufrollen();
 		
-		Anteilsblock ant2 = mgl1.neuerAnteilsblock();
-		ant2.zeichnen(LocalDate.of(2019,04,01), new MglTransaktionInhaltInteger(8));
-		ant2.kuendigen(LocalDate.of(2019,01,20));
+		Anteilsblock anteilsblock2 = mitglied1.neuerAnteilsblock();
+		anteilsblock2.zeichnen(LocalDate.of(2019,04,01), new MglTransaktionInhaltInteger(8));
+		anteilsblock2.kuendigen(LocalDate.of(2019,01,20));
 		
-		Anteilsblock ant3 = mgl1.neuerAnteilsblock();
-		ant2.zeichnen(LocalDate.of(2018,05,05), new MglTransaktionInhaltInteger(20));
+		Anteilsblock anteilsblock3 = mitglied1.neuerAnteilsblock();
+		anteilsblock2.zeichnen(LocalDate.of(2018,05,05), new MglTransaktionInhaltInteger(20));
 		
-		return gen;
+		return genossenschaft;
 	}
 	
 	/*
@@ -77,34 +77,35 @@ public class TestSzenario {
 		System.out.println("Anzahl Mitglieder: " + AnzahlMitglieder);
 		System.out.println("Anzahl Anteile je Mitglied: " + AnzahlAnteileJeMitglied);
 		
-        Genossenschaft gen = new Genossenschaft();
-        gen.setBezeichnungTransaktion("Test Genossenschaft szenarioLasttest");
-        gen.setAnteilshoeheTransaktion(10.0);
+        Genossenschaft genossenschaft = new Genossenschaft();
+        genossenschaft.genossenschaftAnlegenTransaktion(LocalDate.now());
+        genossenschaft.setBezeichnungTransaktion("Test Genossenschaft szenarioLasttest");
+        genossenschaft.setAnteilshoeheTransaktion(10.0);
 		
-		Mitglied tmpMgl;
-		Anteilsblock tmpAnt;
+		Mitglied tmpMitglied;
+		Anteilsblock tmpAnteilsblock;
 		
 		
 		for (int i = 0; i < AnzahlMitglieder; i++) {
-			tmpMgl = gen.neuesMitglied();
+			tmpMitglied = genossenschaft.neuesMitglied();
 			
-			tmpMgl.setMglNummerTransaktion(i);
-			tmpMgl.setBeitrittsdatumTransaktion(LocalDate.of(2020,01,01));
-			tmpMgl.setAustrittsdatum(LocalDate.of(2021,12,12));
-			tmpMgl.setVornameTransaktion("Vorname_" + i);
-			tmpMgl.setNachnameTransaktion("Nachname" + i);
+			tmpMitglied.setMglNummerTransaktion(i);
+			tmpMitglied.setBeitrittsdatumTransaktion(LocalDate.of(2020,01,01));
+			tmpMitglied.setAustrittsdatum(LocalDate.of(2021,12,12));
+			tmpMitglied.setVornameTransaktion("Vorname_" + i);
+			tmpMitglied.setNachnameTransaktion("Nachname" + i);
 			
 			for(int j = 0; j < AnzahlAnteileJeMitglied; j++) {
-				tmpAnt = tmpMgl.neuerAnteilsblock();
-				tmpAnt.zeichnen(LocalDate.now(), new MglTransaktionInhaltInteger(j));
+				tmpAnteilsblock = tmpMitglied.neuerAnteilsblock();
+				tmpAnteilsblock.zeichnen(LocalDate.now(), new MglTransaktionInhaltInteger(j));
 				if (j % 3 == 0) {
-					tmpAnt.kuendigen(LocalDate.now());
+					tmpAnteilsblock.kuendigen(LocalDate.now());
 				}
 				if (j % 6 == 0) {
-					tmpAnt.auszahlungssperrfrist(LocalDate.now());
+					tmpAnteilsblock.auszahlungssperrfrist(LocalDate.now());
 				}
 				if (j % 9 == 0) {
-					tmpAnt.auszahlen(LocalDate.now());
+					tmpAnteilsblock.auszahlen(LocalDate.now());
 				}
 			}
 			
@@ -112,7 +113,7 @@ public class TestSzenario {
 		
 		System.out.println("Lasttest Ende um " + LocalDateTime.now());
 		
-		return gen;
+		return genossenschaft;
 		
 	}
 

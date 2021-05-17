@@ -138,7 +138,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Gezeichnet
 				,anteilsblock.getZustand());
 		assertEquals("Transaktion Zeichnen wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Zeichnung hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Zeichnung
@@ -162,7 +162,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Gezeichnet
 				,anteilsblock.getZustand());
 		assertEquals("Nach nicht erlaubten Geschäftsfällen dürfen keine weiteren Transaktionen in der Liste sein"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());	
 
 		// Test Kündigung im Status Gezeichnet
@@ -173,7 +173,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Gekuendigt
 				,anteilsblock.getZustand());
 		assertEquals("Transaktion Kündigen wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,2
+				,3 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Kündigung hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Kuendigung
@@ -194,7 +194,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Gekuendigt
 				,anteilsblock.getZustand());
 		assertEquals("Nach nicht erlaubten Geschäftsfällen dürfen keine weiteren Transaktionen in der Liste sein"
-				,2
+				,3 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		
 		// Test Auszahlungssperrfrist im Status Gekündigt
@@ -205,7 +205,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Auszahlungssperrfrist
 				,anteilsblock.getZustand());
 		assertEquals("Transaktion Auszahlungssperrfristwurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,3
+				,4 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Auszahlungssperrfrist hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Auszahlungssperrfrist
@@ -226,7 +226,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Auszahlungssperrfrist
 				,anteilsblock.getZustand());
 		assertEquals("Nach nicht erlaubten Geschäftsfällen dürfen keine weiteren Transaktionen in der Liste sein"
-				,3
+				,4 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		
 
@@ -238,7 +238,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Ausgezahlt
 				,anteilsblock.getZustand());
 		assertEquals("Transaktion Auszahlungssperrfristwurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,4
+				,5 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Auszahlungssperrfrist hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Auszahlung
@@ -262,7 +262,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Ausgezahlt
 				,anteilsblock.getZustand());
 		assertEquals("Nach nicht erlaubten Geschäftsfällen dürfen keine weiteren Transaktionen in der Liste sein"
-				,4
+				,5 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 
 	}
@@ -285,7 +285,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Gezeichnet
 				,anteilsblock.getZustand());
 		assertEquals("Transaktion Zeichnen wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,1
+				,2 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Zeichnung hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Zeichnung
@@ -301,7 +301,7 @@ public class AnteilsblockTest {
 				,ZustandAnteilsblock.Start
 				,anteilsblock.getZustand());
 		assertEquals("Transaktion Storno Zeichnen wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
-				,2
+				,3 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		assertEquals("Transaktion Zeichnung hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
 				,MglTransaktionsTyp.Zeichnung
@@ -312,7 +312,7 @@ public class AnteilsblockTest {
 		MglTransaktion tkuen = anteilsblock.kuendigen(LocalDate.of(2021,02,01));
 		
 		assertEquals("Erwartet werden 4 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung"
-				,4
+				,5 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		
 		//Test Stornierung nicht erlaubt - in Zustand Kündigung kann die Zeichnung nicht storniert werden
@@ -323,7 +323,7 @@ public class AnteilsblockTest {
 				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 4 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung"
-				,4
+				,5 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		
 		//Test bis zu Ausgezahlt - dann zurückstornieren nach Start
@@ -335,7 +335,7 @@ public class AnteilsblockTest {
 				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 6 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung"
-				,6
+				,7 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		
 		anteilsblock.stornieren(t);
@@ -347,7 +347,7 @@ public class AnteilsblockTest {
 				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 6 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung"
-				,6
+				,7 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		
 		anteilsblock.stornieren(tauszahlung);
@@ -357,7 +357,7 @@ public class AnteilsblockTest {
 				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 7 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung, Storno Auszahlung"
-				,7
+				,8 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		
 		anteilsblock.stornieren(tazspf);
@@ -367,7 +367,7 @@ public class AnteilsblockTest {
 				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 8 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung, Storno Auszahlung, Storno AZSPF"
-				,8
+				,9 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 		
 		anteilsblock.stornieren(tkuen);
@@ -377,7 +377,7 @@ public class AnteilsblockTest {
 				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 9 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung, Storno Auszahlung, Storno AZSPF, Storno Kündigung"
-				,9
+				,10 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 
 		anteilsblock.stornieren(t);
@@ -387,7 +387,7 @@ public class AnteilsblockTest {
 				,anteilsblock.getZustand());
 		
 		assertEquals("Erwartet werden 10 Transaktionen: Zeichnung, Storno Zeichung, Zeichnung, Kündigung, Auszahlungssperrfrist, Auszahlung, Storno Auszahlung, Storno AZSPF, Storno Kündigung, Storno Zeichnung"
-				,10
+				,11 //Transaktion AnlageAnteilsblock ist immer die erste Transaktion
 				,anteilsblock.getTransaktionen().size());
 
 	}

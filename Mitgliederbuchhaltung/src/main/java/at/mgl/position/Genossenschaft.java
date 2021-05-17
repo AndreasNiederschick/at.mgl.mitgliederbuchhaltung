@@ -55,11 +55,7 @@ public class Genossenschaft implements Position{
 	
 	public Mitglied neuesMitglied() {
 		
-		Mitglied ret = new Mitglied(this,UUID.randomUUID());
-		
-		this.mitglieder.put(ret.getMitgliedID(),ret);
-		
-		return ret;
+		return this.neuesMitglied(UUID.randomUUID());
 	}
 	
 	public Mitglied neuesMitglied(UUID mglID) {
@@ -68,6 +64,10 @@ public class Genossenschaft implements Position{
 		
 		this.mitglieder.put(ret.getMitgliedID(),ret);
 		
+		if(!this.doPersist) {
+			ret.setDoPersist(this.doPersist);
+			ret.mitgliedAnlegenTransaktion(LocalDate.now());
+		}
 		return ret;
 	}
 	
@@ -122,7 +122,23 @@ public class Genossenschaft implements Position{
 		return new ArrayList<Mitglied>(this.mitglieder.values());
 	}
 	
+	
+	public MglTransaktion  genossenschaftAnlegenTransaktion(LocalDate datum)  {
+		
+		MglTransaktion ret = MglTransaktionFactory.erstelleTransaktionGenossenschaft(
+				this.genossenschaftID
+				,datum
+				,MglTransaktionsTyp.GenossenschaftAnlage
+				,new MglTransaktionInhaltString(this.genossenschaftID.toString())
+				,this.doPersist);
+		
+		this.transaktionen.add(ret);
+		
+		return ret;
+	}
+	
 	// GETTER & SETTER die Transaktionen erstellen
+
 	public MglTransaktion  setBezeichnungTransaktionPer(String bezeichnung,LocalDate datum)  {
 		
 		this.bezeichnung = bezeichnung;

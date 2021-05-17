@@ -33,8 +33,7 @@ public class App
         //TestSzenario.szenarioStandard();
         //TestSzenario.szenarioLasttest(5, 10);
         
-    	
-    	
+
     	Map<UUID,Genossenschaft> genossenschaften = new HashMap<UUID,Genossenschaft>();    	
     	
         List<MglTransaktion> transaktionen = MglPersistenzJSON.leseTransaktionenVonJsonDatei();

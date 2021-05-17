@@ -11,12 +11,13 @@ import at.mgl.transaktion.MglTransaktionFactory;
 import at.mgl.transaktion.MglTransaktionsTyp;
 import at.mgl.transaktion.inhalt.IMglTransaktionInhalt;
 import at.mgl.transaktion.inhalt.MglTransaktionInhaltInteger;
+import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 
 public class Anteilsblock implements Position {
 	
 	private Genossenschaft genossenschaft = null;
 	private Mitglied mitglied = null;
-	private UUID mglAnteilsblockID = null;
+	private UUID anteilsblockID = null;
 	
 	private LocalDateTime tstZeichnung = null;
 	private LocalDateTime tstKuendigung = null;
@@ -42,21 +43,36 @@ public class Anteilsblock implements Position {
 	public Anteilsblock(Genossenschaft genossenschaft, Mitglied mitglied) {
 		this.genossenschaft = genossenschaft;
 		this.mitglied = mitglied;
-		this.mglAnteilsblockID = UUID.randomUUID();
+		this.anteilsblockID = UUID.randomUUID();
 	}
 	
 	public Anteilsblock(UUID anteilsblockID) {
 		this.genossenschaft = null;
 		this.mitglied = null;
-		this.mglAnteilsblockID = anteilsblockID;
+		this.anteilsblockID = anteilsblockID;
 	}
-	
 	
 	public Anteilsblock(Genossenschaft genossenschaft, Mitglied mitglied, UUID anteilsblockID) {
 		super();
 		this.genossenschaft = genossenschaft;
 		this.mitglied = mitglied;
-		this.mglAnteilsblockID = anteilsblockID;
+		this.anteilsblockID = anteilsblockID;
+	}
+	
+	public MglTransaktion  anteilsblockAnlegenTransaktion(LocalDate datum)  {
+		
+		MglTransaktion ret = MglTransaktionFactory.erstelleTransaktionAnteilsblock (
+				this.genossenschaft.getGenossenschaftID()
+				,this.mitglied.getMitgliedID()
+				,this.anteilsblockID
+				,datum
+				,MglTransaktionsTyp.MitgliedAnlage
+				,new MglTransaktionInhaltString(this.anteilsblockID.toString())
+				,this.doPersist);
+		
+		this.transaktionen.add(ret);
+		
+		return ret;
 	}
 	
 	public MglTransaktion zeichnen (LocalDate mglDatumTransaktion,IMglTransaktionInhalt mglInhalt) {
@@ -259,11 +275,11 @@ public class Anteilsblock implements Position {
 	}
 
 	public UUID getMglAnteilsblockID() {
-		return mglAnteilsblockID;
+		return anteilsblockID;
 	}
 
 	public void setMglAnteilsblockID(UUID mglAnteilID) {
-		this.mglAnteilsblockID = mglAnteilID;
+		this.anteilsblockID = mglAnteilID;
 	}
 
 	public LocalDateTime getTstZeichnung() {
