@@ -10,45 +10,16 @@
 
 <h:body>
 
-     <div class="card">
-        <h5>Multiple Selecstion</h5>
-        <p:accordionPanel multiple="true" widgetVar="multiple">
-            <p:tab title="Verfügbare Genossenschaften">
-            	<h:form>
-                
-               		<h5>Basic</h5>
-        				<div class="p-col-12 p-md-6 p-lg-4 p-xl-3">
-            				<p:selectOneListbox id="basic" value="#{mglContextBean.genossenschaft}" var="genossenschaft">
-                				<f:selectItems value="#{mglContextBean.genossenschaftListe}"
-                								var="genossenschaft"
-                								itemLabel="#{genossenschaft.bezeichnung}"
-                								itemValue="#{genossenschaft}"/>
-                				<p:column>
-                    				<h:outputText value="#{genossenschaft.genossenschaftID}"/>
-                				</p:column>	
-                				<p:column>
-                    				<h:outputText value="#{genossenschaft.bezeichnung}"/>
-                				</p:column>
-            				</p:selectOneListbox>
-        				</div>
-                
-                </h:form>
-            </p:tab>
-            <p:tab title="Header II">
-                <p class="p-m-0">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                    illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                    odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-                </p>
-            </p:tab>
-            <p:tab title="Header III">
-                <p class="p-m-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-                    et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
-                    Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                </p>
-            </p:tab>
-        </p:accordionPanel>
-    </div>
+	<h:form>
+        <h:panelGrid columns="2" rendered="#{!login.loggedIn}">
+            <h:outputLabel for="username">Username:</h:outputLabel>
+            <h:inputText id="username" value="#{credentials.username}"/>
+            <h:outputLabel for="password">Password:</h:outputLabel>
+            <h:inputText id="password" value="#{credentials.password}"/>
+        </h:panelGrid>
+        <h:commandButton value="Login" action="#{login.login}" rendered="#{!login.loggedIn}"/>
+        <h:commandButton value="Logout" action="#{login.logout}" rendered="#{login.loggedIn}"/>
+    </h:form>
 
 </h:body>
 
