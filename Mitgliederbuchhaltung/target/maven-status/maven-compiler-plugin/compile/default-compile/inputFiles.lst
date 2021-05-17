@@ -9,10 +9,10 @@
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/position/Genossenschaft.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/MglTransaktionsTyp.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/IMglTransaktion.java
+/home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/inhalt/MglTransaktionInhaltLocalDate.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/position/Mitglied.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/Mitgliederbuchhaltung/Jsf23Activator.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/inhalt/IMglTransaktionInhalt.java
-/home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/inhalt/MglTransaktionInhaltDate.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/transaktion/inhalt/MglTransaktionInhaltDouble.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/position/Anteilsblock.java
 /home/andreas/git/at.mgl.mitgliederbuchhaltung/Mitgliederbuchhaltung/src/main/java/at/mgl/position/Position.java

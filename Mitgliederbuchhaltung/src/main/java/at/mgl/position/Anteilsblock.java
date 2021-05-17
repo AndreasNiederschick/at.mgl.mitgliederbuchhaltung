@@ -31,6 +31,11 @@ public class Anteilsblock implements Position {
 	private long eingezahlt = 0;
 	private boolean hatHaftung = false;
 	
+	/* Im Standardfall soll die erstellten Transaktionen persistiert werden.
+	 * Für Tests aber zB nicht. Dann kann auf false gestellt werden.
+	 */
+	private boolean doPersist = true;
+	
 	/* Liste der Transaktionen zum Anteil */
 	private List<MglTransaktion> transaktionen = new ArrayList<MglTransaktion>();
 	
@@ -67,7 +72,8 @@ public class Anteilsblock implements Position {
 					,this.getMglAnteilsblockID()
 					,mglDatumTransaktion
 					,MglTransaktionsTyp.Zeichnung
-					,mglInhalt);
+					,mglInhalt
+					,this.doPersist);
 			
 			//Zustand und Werte am Anteilsblock verändern
 			this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Zeichnung, false);
@@ -94,7 +100,8 @@ public class Anteilsblock implements Position {
 					,this.getMglAnteilsblockID()
 					,mglDatumTransaktion
 					,MglTransaktionsTyp.Kuendigung
-					,new MglTransaktionInhaltInteger(this.menge));
+					,new MglTransaktionInhaltInteger(this.menge)
+					,this.doPersist);
 					
 			//Zustand und Werte am Anteilsblock verändern
 			this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Kuendigung, false);
@@ -120,7 +127,8 @@ public class Anteilsblock implements Position {
 					,this.getMglAnteilsblockID()
 					,mglDatumTransaktion
 					,MglTransaktionsTyp.Auszahlungssperrfrist
-					,new MglTransaktionInhaltInteger(this.menge));
+					,new MglTransaktionInhaltInteger(this.menge)
+					,this.doPersist);
 					
 			//Zustand und Werte am Anteilsblock verändern
 			this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Auszahlungssperrfrist, false);
@@ -147,7 +155,8 @@ public class Anteilsblock implements Position {
 					,this.getMglAnteilsblockID()
 					,mglDatumTransaktion
 					,MglTransaktionsTyp.Auszahlung
-					,new MglTransaktionInhaltInteger(this.menge));
+					,new MglTransaktionInhaltInteger(this.menge)
+					,this.doPersist);
 							
 			//Zustand und Werte am Anteilsblock verändern
 			this.zustand = this.zustand.naechsterStatus(MglTransaktionsTyp.Auszahlung, false);
@@ -171,7 +180,7 @@ public class Anteilsblock implements Position {
 				) {
 			
 			//Transaktion erzeugen und in die Liste einhängen
-			ret = mglTransaktion.stornieren();
+			ret = mglTransaktion.stornieren(this.doPersist);
 			this.transaktionen.add(ret);
 			
 			//Zustand und Werte am Anteilsblock verändern
@@ -351,6 +360,14 @@ public class Anteilsblock implements Position {
 
 	public void setTransaktionen(List<MglTransaktion> transaktionen) {
 		this.transaktionen = transaktionen;
+	}
+
+	public boolean isDoPersist() {
+		return doPersist;
+	}
+
+	public void setDoPersist(boolean doPersist) {
+		this.doPersist = doPersist;
 	}
 	
 }

@@ -12,14 +12,17 @@ public class MglTransaktionFactory {
 			UUID mglGenossenschaftID
 			,LocalDate mglDatumTransaktion
 			,MglTransaktionsTyp mglTransaktionsTyp
-			,IMglTransaktionInhalt mglInhalt) {
+			,IMglTransaktionInhalt mglInhalt
+			,boolean doPersist) {
 		
 		MglTransaktion ret = new MglTransaktion (
 				mglGenossenschaftID
 				,mglDatumTransaktion
 				,mglTransaktionsTyp,mglInhalt);
 		
-		MglPersistenzJSON.schreibeTransaktionInJsonDatei(ret);
+		if (doPersist)  {
+			MglPersistenzJSON.schreibeTransaktionInJsonDatei(ret);
+		}	
 		
 		return ret;
 	}
@@ -29,7 +32,8 @@ public class MglTransaktionFactory {
 			,UUID mglMitgliedID
 			,LocalDate mglDatumTransaktion
 			,MglTransaktionsTyp mglTransaktionsTyp
-			,IMglTransaktionInhalt mglInhalt) {
+			,IMglTransaktionInhalt mglInhalt
+			,boolean doPersist) {
 		
 		MglTransaktion ret = new MglTransaktion (
 				mglGenossenschaftID
@@ -38,7 +42,9 @@ public class MglTransaktionFactory {
 				,mglTransaktionsTyp
 				,mglInhalt);
 		
-		MglPersistenzJSON.schreibeTransaktionInJsonDatei(ret);
+		if (doPersist)  {
+			MglPersistenzJSON.schreibeTransaktionInJsonDatei(ret);
+		}
 		
 		return ret;
 	}
@@ -49,7 +55,8 @@ public class MglTransaktionFactory {
 			,UUID mglAnteilsblockID
 			,LocalDate mglDatumTransaktion
 			,MglTransaktionsTyp mglTransaktionsTyp
-			,IMglTransaktionInhalt mglInhalt) {
+			,IMglTransaktionInhalt mglInhalt
+			,boolean doPersist) {
 		
 		MglTransaktion ret = new MglTransaktion (
 				mglGenossenschaftID
@@ -59,7 +66,9 @@ public class MglTransaktionFactory {
 				,mglTransaktionsTyp
 				,mglInhalt);
 		
-		MglPersistenzJSON.schreibeTransaktionInJsonDatei(ret);
+		if (doPersist)  {
+			MglPersistenzJSON.schreibeTransaktionInJsonDatei(ret);
+		}
 		
 		return ret;
 	}
@@ -70,7 +79,8 @@ public class MglTransaktionFactory {
 			,UUID mglAnteilsblockID
 			,LocalDate mglDatumTransaktion
 			,MglTransaktionsTyp mglTransaktionsTyp
-			,IMglTransaktionInhalt mglInhalt) {
+			,IMglTransaktionInhalt mglInhalt
+			,boolean doPersist) {
 		
 		MglTransaktion ret = new MglTransaktion (
 				mglGenossenschaftID
@@ -80,7 +90,9 @@ public class MglTransaktionFactory {
 				,mglTransaktionsTyp
 				,mglInhalt);
 		
-		MglPersistenzJSON.schreibeTransaktionInJsonDatei(ret);
+		if (doPersist)  {
+			MglPersistenzJSON.schreibeTransaktionInJsonDatei(ret);
+		}
 		
 		return ret;
 	}

@@ -17,12 +17,14 @@ import at.mgl.transaktion.inhalt.MglTransaktionInhaltString;
 
 public class GenossenschaftTest {
 	
-	Genossenschaft gen;
+	Genossenschaft genossenschaft;
 	LocalDate datumTest;
 	
 	@Before
 	public void setUp() {
-		gen = new Genossenschaft();
+		genossenschaft = new Genossenschaft();
+		genossenschaft.setDoPersist(false);
+		
 		datumTest = LocalDate.of(1900,1,1);
 	}
 	@After
@@ -34,16 +36,16 @@ public class GenossenschaftTest {
 	public void shouldSetBezeichnungAndTransaktionPer() {
 		String bezeichnung = "Testbezeichung";
 		//MglTransaktion t = gen.setMitTransaktion(gen.getBezeichnung(), "Test Genossenschaft 1");
-		MglTransaktion t = gen.setBezeichnungTransaktionPer(bezeichnung,datumTest);
+		MglTransaktion t = genossenschaft.setBezeichnungTransaktionPer(bezeichnung,datumTest);
 		
 		assertEquals("Genossenschaft Bezeichnung wurde nicht gesetzt"
 				,bezeichnung
-				, gen.getBezeichnung());
+				, genossenschaft.getBezeichnung());
 		assertEquals("Transaktion Genossenschaft Bezeichnung wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,gen.getTransaktionen().size());
+				,genossenschaft.getTransaktionen().size());
 		assertEquals("Transaktion Genossenschaft Bezeichnung hat nicht MglTransaktionsTyp GenBezeichnung"
-				,MglTransaktionsTyp.GenBezeichnung
+				,MglTransaktionsTyp.GenossenschaftBezeichnung
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Genossenschaft Bezeichnung hat nicht den angegebenen Wert " + bezeichnung
 				,bezeichnung
@@ -55,17 +57,16 @@ public class GenossenschaftTest {
 	@Test
 	public void shouldSetBezeichnungAndTransaktion() {
 		String bezeichnung = "Testbezeichung";
-		//MglTransaktion t = gen.setMitTransaktion(gen.getBezeichnung(), "Test Genossenschaft 1");
-		MglTransaktion t = gen.setBezeichnungTransaktion(bezeichnung);
+		MglTransaktion t = genossenschaft.setBezeichnungTransaktion(bezeichnung);
 		
 		assertEquals("Genossenschaft Bezeichnung wurde nicht gesetzt"
 				,bezeichnung
-				, gen.getBezeichnung());
+				, genossenschaft.getBezeichnung());
 		assertEquals("Transaktion Genossenschaft Bezeichnung wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,gen.getTransaktionen().size());
+				,genossenschaft.getTransaktionen().size());
 		assertEquals("Transaktion Genossenschaft Bezeichnung hat nicht MglTransaktionsTyp GenBezeichnung"
-				,MglTransaktionsTyp.GenBezeichnung
+				,MglTransaktionsTyp.GenossenschaftBezeichnung
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Genossenschaft Bezeichnung hat nicht den angegebenen Wert " + bezeichnung
 				,bezeichnung
@@ -75,18 +76,17 @@ public class GenossenschaftTest {
 	@Test
 	public void shouldSetAnteilshoeheAndTransaktionPer() {
 		double anteilshoehe = 10.1;
-		//MglTransaktion t = gen.setMitTransaktion(gen.getAnteilshoehe(), anteilshoehe);
-		MglTransaktion t = gen.setAnteilshoeheTransaktionPer(anteilshoehe,datumTest);
+		MglTransaktion t = genossenschaft.setAnteilshoeheTransaktionPer(anteilshoehe,datumTest);
 
 		assertEquals("Genossenschaft Anteilshöhe wurde nicht gesetzt"
 				,anteilshoehe
-				, gen.getAnteilshoehe()
+				, genossenschaft.getAnteilshoehe()
 				,0.001);
 		assertEquals("Transaktion Genossenschaft Anteilshöhe wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,gen.getTransaktionen().size());
+				,genossenschaft.getTransaktionen().size());
 		assertEquals("Transaktion Genossenschaft Anteilshöhe hat nicht MglTransaktionsTyp Gen1anteilshoehe"
-				,MglTransaktionsTyp.GenAnteilshoehe
+				,MglTransaktionsTyp.GenossenschaftAnteilshoehe
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Genossenschaft Anteilshöhe hat nicht den angegebenen Wert"
 				,anteilshoehe
@@ -99,18 +99,17 @@ public class GenossenschaftTest {
 	@Test
 	public void shouldSetAnteilshoeheAndTransaktion() {
 		double anteilshoehe = 10.1;
-		//MglTransaktion t = gen.setMitTransaktion(gen.getAnteilshoehe(), anteilshoehe);
-		MglTransaktion t = gen.setAnteilshoeheTransaktion(anteilshoehe);
+		MglTransaktion t = genossenschaft.setAnteilshoeheTransaktion(anteilshoehe);
 
 		assertEquals("Genossenschaft Anteilshöhe wurde nicht gesetzt"
 				,anteilshoehe
-				, gen.getAnteilshoehe()
+				, genossenschaft.getAnteilshoehe()
 				,0.001);
 		assertEquals("Transaktion Genossenschaft Anteilshöhe wurde nicht erzeugt oder in die Transaktionsliste eingefügt"
 				,1
-				,gen.getTransaktionen().size());
+				,genossenschaft.getTransaktionen().size());
 		assertEquals("Transaktion Genossenschaft Anteilshöhe hat nicht MglTransaktionsTyp Gen1anteilshoehe"
-				,MglTransaktionsTyp.GenAnteilshoehe
+				,MglTransaktionsTyp.GenossenschaftAnteilshoehe
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Genossenschaft Anteilshöhe hat nicht den angegebenen Wert"
 				,anteilshoehe

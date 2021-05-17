@@ -25,7 +25,11 @@ public class MitgliedTest {
 	@Before
 	public void setUp() {
 		genossenschaft = new Genossenschaft();
+		genossenschaft.setDoPersist(false);
+		
 		mitglied = genossenschaft.neuesMitglied();
+		mitglied.setDoPersist(false);
+		
 		datumTest = LocalDate.of(1900,1,1);
 	}
 	@After
@@ -52,7 +56,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitgliedsnummer hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglMitgliedsnummer
+				,MglTransaktionsTyp.MitgliedMitgliedsnummer
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitgliedsnummer hat nicht den angegebenen Wert " + mitgliedsNummer
 				,mitgliedsNummer
@@ -71,7 +75,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitgliedsnummer hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglMitgliedsnummer
+				,MglTransaktionsTyp.MitgliedMitgliedsnummer
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitgliedsnummer hat nicht den angegebenen Wert " + mglNummer
 				,mglNummer
@@ -93,7 +97,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Vorname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglVorname
+				,MglTransaktionsTyp.MitgliedVorname
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Vorname hat nicht den angegebenen Wert " + name
 				,name
@@ -115,7 +119,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Vorname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglVorname
+				,MglTransaktionsTyp.MitgliedVorname
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Vorname hat nicht den angegebenen Wert " + name
 				,name
@@ -131,7 +135,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Nachname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglNachname
+				,MglTransaktionsTyp.MitgliedNachname
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Nachname hat nicht den angegebenen Wert " + nachname
 				,nachname
@@ -151,7 +155,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Nachname hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglNachname
+				,MglTransaktionsTyp.MitgliedNachname
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Nachname hat nicht den angegebenen Wert " + nachname
 				,nachname
@@ -171,7 +175,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglBeitritt
+				,MglTransaktionsTyp.MitgliedBeitritt
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat nicht den angegebenen Wert " + beitritt
 				,beitritt
@@ -193,7 +197,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglBeitritt
+				,MglTransaktionsTyp.MitgliedBeitritt
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Beitrittsdatum hat nicht den angegebenen Wert " + beitritt
 				,beitritt
@@ -212,7 +216,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglAustritt
+				,MglTransaktionsTyp.MitgliedAustritt
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat nicht den angegebenen Wert " + austritt
 				,austritt
@@ -234,7 +238,7 @@ public class MitgliedTest {
 				,1
 				,mitglied.getTransaktionen().size());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat den falschen MglTransaktionstyp " + t.getMglTransaktionsTyp()
-				,MglTransaktionsTyp.MglAustritt
+				,MglTransaktionsTyp.MitgliedAustritt
 				,t.getMglTransaktionsTyp());
 		assertEquals("Transaktion Mitglied Austrittsdatum hat nicht den angegebenen Wert " + austritt
 				,austritt

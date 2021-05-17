@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface IMglTransaktion {
 	
-	public MglTransaktion stornieren ();
+	public MglTransaktion stornieren (boolean doPersist);
 	
 	public List<MglTransaktion> split ();
 	

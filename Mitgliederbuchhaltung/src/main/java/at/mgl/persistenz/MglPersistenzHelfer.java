@@ -28,7 +28,7 @@ public class MglPersistenzHelfer {
 		.forEach(t -> ladeAnteilsblock(t,ret));
         
         
-		List<Genossenschaft> genList = new ArrayList(ret.values());
+		List<Genossenschaft> genList = new ArrayList<Genossenschaft>(ret.values());
         
         genList.stream().forEach(Genossenschaft::aufrollen);
         
@@ -55,10 +55,10 @@ public class MglPersistenzHelfer {
 	private static Mitglied ladeMitglied(MglTransaktion t, Map<UUID,Genossenschaft> genossenschaften) {
 		
 		Mitglied ret;
-		Genossenschaft gen = genossenschaften.get(t.getMglGenossenschaftID());
+		Genossenschaft genossenschaft = genossenschaften.get(t.getMglGenossenschaftID());
 		
-		ret = gen.getMitglieder().computeIfAbsent(t.getMglMitgliedID(),Mitglied::new);
-		ret.setGen(gen);
+		ret = genossenschaft.getMitglieder().computeIfAbsent(t.getMglMitgliedID(),Mitglied::new);
+		ret.setGen(genossenschaft);
 		ret.getTransaktionen().add(t);
 		
 		return ret;

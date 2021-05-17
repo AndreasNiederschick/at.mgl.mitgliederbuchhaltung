@@ -19,37 +19,33 @@ public class GenossenschaftUebersichtBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Genossenschaft gen;
+	
+	private Genossenschaft genossenschaft;
 
 	@Inject
 	private MglContextBean mglContext;
 	
 	public GenossenschaftUebersichtBean() {
-		super();
+
 	}
 
 	@PostConstruct
 	  public void init() {
-		this.gen = mglContext.getGen();
-		System.out.println("Genossenschaft injected " + gen.getBezeichnung());
+		this.genossenschaft = mglContext.getGenossenschaft();
+		System.out.println("Genossenschaft injected " + genossenschaft.getBezeichnung());
 	}
 	
 
 	public List<Mitglied> getMitglieder() {
-		return this.gen.getMitgliederListe();
+		return this.genossenschaft.getMitgliederListe();
 	}
 
-	/*
-	public void setMitglieder(List<Mitglied> mitglieder) {
-		this.mitglieder = mitglieder;
-	}*/
-
 	public String getBezeichnung() {
-		return this.gen.getBezeichnung();
+		return this.genossenschaft.getBezeichnung();
 	}
 
 	public void setBezeichnung(String bezeichnung) {
-		this.gen.setBezeichnung(bezeichnung);
+		this.genossenschaft.setBezeichnung(bezeichnung);
 	}
 	
 	

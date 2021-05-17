@@ -29,6 +29,11 @@ public class Genossenschaft implements Position{
 	/* Liste der Transaktionen zur Genossenschaft */
 	private List<MglTransaktion> transaktionen = new ArrayList<MglTransaktion>();
 	
+	/* Im Standardfall soll die erstellten Transaktionen persistiert werden.
+	 * Für Tests aber zB nicht. Dann kann auf false gestellt werden.
+	 */
+	private boolean doPersist = true;
+	
 	// ---------------------------------------------------------------------------------
 	// Konstruktoren 
 	// ---------------------------------------------------------------------------------
@@ -90,7 +95,7 @@ public class Genossenschaft implements Position{
 				
 				switch(mglTransaktion.getMglTransaktionsTyp()) {
 				
-				case GenBezeichnung:
+				case GenossenschaftBezeichnung:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						System.out.println("Keine Stammdatenänderung bei Storno zu Transaktionstyp " + mglTransaktion.getMglTransaktionsTyp());
 					} else {
@@ -98,7 +103,7 @@ public class Genossenschaft implements Position{
 					}
 					break;
 				
-				case GenAnteilshoehe:
+				case GenossenschaftAnteilshoehe:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						System.out.println("Keine Stammdatenänderung bei Storno zu Transaktionstyp " + mglTransaktion.getMglTransaktionsTyp());
 					} else {
@@ -114,7 +119,7 @@ public class Genossenschaft implements Position{
 	}
 	
 	public List<Mitglied> getMitgliederListe () {
-		return new ArrayList(this.mitglieder.values());
+		return new ArrayList<Mitglied>(this.mitglieder.values());
 	}
 	
 	// GETTER & SETTER die Transaktionen erstellen
@@ -125,8 +130,9 @@ public class Genossenschaft implements Position{
 		MglTransaktion ret = MglTransaktionFactory.erstelleTransaktionGenossenschaft(
 				this.genossenschaftID
 				,datum
-				,MglTransaktionsTyp.GenBezeichnung
-				,new MglTransaktionInhaltString(this.bezeichnung));
+				,MglTransaktionsTyp.GenossenschaftBezeichnung
+				,new MglTransaktionInhaltString(this.bezeichnung)
+				,this.doPersist);
 		
 		this.transaktionen.add(ret);
 		
@@ -143,8 +149,9 @@ public class Genossenschaft implements Position{
 		MglTransaktion ret = MglTransaktionFactory.erstelleTransaktionGenossenschaft(
 				this.genossenschaftID
 				,datum
-				,MglTransaktionsTyp.GenAnteilshoehe
-				,new MglTransaktionInhaltDouble(this.anteilshoehe));
+				,MglTransaktionsTyp.GenossenschaftAnteilshoehe
+				,new MglTransaktionInhaltDouble(this.anteilshoehe)
+				,this.doPersist);
 		
 		this.transaktionen.add(ret);
 		
@@ -166,7 +173,7 @@ public class Genossenschaft implements Position{
 	}
 
 	public void setBezeichnung(String bezeichnung) {
-		bezeichnung = bezeichnung;
+		this.bezeichnung = bezeichnung;
 	}
 
 	public UUID getGenossenschaftID() {
@@ -205,5 +212,12 @@ public class Genossenschaft implements Position{
 		this.anteilshoehe = anteilshoehe;
 	}
 	
+	public boolean isDoPersist() {
+		return doPersist;
+	}
+
+	public void setDoPersist(boolean doPersist) {
+		this.doPersist = doPersist;
+	}
 
 }

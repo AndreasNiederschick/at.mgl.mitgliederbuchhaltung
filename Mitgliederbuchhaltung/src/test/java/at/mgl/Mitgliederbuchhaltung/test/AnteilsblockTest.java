@@ -26,8 +26,13 @@ public class AnteilsblockTest {
 	@Before
 	public void setUp() {
 		genossenschaft = new Genossenschaft();
+		genossenschaft.setDoPersist(false);
+		
 		mitglied = genossenschaft.neuesMitglied();
+		mitglied.setDoPersist(false);
+		
 		anteilsblock = mitglied.neuerAnteilsblock();
+		anteilsblock.setDoPersist(false);
 	}
 	@After
 	public void cleanUp() {
@@ -38,6 +43,7 @@ public class AnteilsblockTest {
 	public void testAufrollen() {
 		
 		Anteilsblock antAufroll = mitglied.neuerAnteilsblock();
+		antAufroll.setDoPersist(false);
 		
 		
 		MglTransaktion tzeichnung = anteilsblock.zeichnen(LocalDate.of(2021,01,01), new MglTransaktionInhaltInteger(10));
@@ -119,8 +125,7 @@ public class AnteilsblockTest {
 	public void testSzenarioStandard() {
 		int menge = 1;
 		
-		// Test vor der Zeichnung
-		
+		// Test vor der Zeichnung	
 		assertEquals("Zustand zu Beginn muss sein: " + ZustandAnteilsblock.Start
 				,ZustandAnteilsblock.Start
 				,anteilsblock.getZustand());

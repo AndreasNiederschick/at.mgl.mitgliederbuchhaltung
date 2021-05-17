@@ -35,6 +35,11 @@ public class Mitglied implements Position{
 	/* Liste der Transaktionen zum Mitglied */
 	private List<MglTransaktion> transaktionen = new ArrayList<MglTransaktion>();
 	
+	/* Im Standardfall soll die erstellten Transaktionen persistiert werden.
+	 * Für Tests aber zB nicht. Dann kann auf false gestellt werden.
+	 */
+	private boolean doPersist = true;
+	
 	// ---------------------------------------------------------------------------------
 	// Konstruktoren 
 	// ---------------------------------------------------------------------------------
@@ -70,7 +75,7 @@ public class Mitglied implements Position{
 				
 				switch(mglTransaktion.getMglTransaktionsTyp()) {
 				
-				case MglMitgliedsnummer:
+				case MitgliedMitgliedsnummer:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						System.out.println("Keine Stammdatenänderung bei Storno zu Transaktionstyp " + mglTransaktion.getMglTransaktionsTyp());
 					} else {
@@ -78,7 +83,7 @@ public class Mitglied implements Position{
 					}
 					break;
 				
-				case MglBeitritt:
+				case MitgliedBeitritt:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						System.out.println("Keine Stammdatenänderung bei Storno zu Transaktionstyp " + mglTransaktion.getMglTransaktionsTyp());
 					} else {
@@ -86,7 +91,7 @@ public class Mitglied implements Position{
 					}
 					break;
 				
-				case MglAustritt:
+				case MitgliedAustritt:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						System.out.println("Keine Stammdatenänderung bei Storno zu Transaktionstyp " + mglTransaktion.getMglTransaktionsTyp());
 					} else {
@@ -94,7 +99,7 @@ public class Mitglied implements Position{
 					}
 					break;
 				
-				case MglVorname:
+				case MitgliedVorname:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						System.out.println("Keine Stammdatenänderung bei Storno zu Transaktionstyp " + mglTransaktion.getMglTransaktionsTyp());
 					} else {
@@ -102,7 +107,7 @@ public class Mitglied implements Position{
 					}
 					break;
 				
-				case MglNachname:
+				case MitgliedNachname:
 					if (mglTransaktion.isIstStornoTransaktion()) {
 						System.out.println("Keine Stammdatenänderung bei Storno zu Transaktionstyp " + mglTransaktion.getMglTransaktionsTyp());
 					} else {
@@ -117,7 +122,7 @@ public class Mitglied implements Position{
 	}
 	
 	public List<Anteilsblock> getAnteilsblockListe () {
-		return new ArrayList(this.anteilsbloecke.values());
+		return new ArrayList<Anteilsblock>(this.anteilsbloecke.values());
 	}
 	
 	// GETTER & SETTER die Transaktionen erstellen	
@@ -129,8 +134,9 @@ public class Mitglied implements Position{
 						this.genossenschaft.getGenossenschaftID()
 						,this.mitgliedID
 						,datum
-						,MglTransaktionsTyp.MglMitgliedsnummer
-						,new MglTransaktionInhaltInteger(mitgliedsNummer));
+						,MglTransaktionsTyp.MitgliedMitgliedsnummer
+						,new MglTransaktionInhaltInteger(mitgliedsNummer)
+						,this.doPersist);
 		
 		this.transaktionen.add(ret);
 		
@@ -150,8 +156,9 @@ public class Mitglied implements Position{
 				this.genossenschaft.getGenossenschaftID()
 				,this.mitgliedID
 				,datum
-				,MglTransaktionsTyp.MglVorname
-				,new MglTransaktionInhaltString(vorname));
+				,MglTransaktionsTyp.MitgliedVorname
+				,new MglTransaktionInhaltString(vorname)
+				,this.doPersist);
 		
 		this.transaktionen.add(ret);
 		
@@ -171,8 +178,9 @@ public class Mitglied implements Position{
 				this.genossenschaft.getGenossenschaftID()
 				,this.mitgliedID
 				,datum
-				,MglTransaktionsTyp.MglNachname
-				,new MglTransaktionInhaltString(nachname));
+				,MglTransaktionsTyp.MitgliedNachname
+				,new MglTransaktionInhaltString(nachname)
+				,this.doPersist);
 		
 		this.transaktionen.add(ret);
 		
@@ -192,8 +200,9 @@ public class Mitglied implements Position{
 				this.genossenschaft.getGenossenschaftID()
 				,this.mitgliedID
 				,datum
-				,MglTransaktionsTyp.MglBeitritt
-				,new MglTransaktionInhaltLocalDate(beitrittsdatum));
+				,MglTransaktionsTyp.MitgliedBeitritt
+				,new MglTransaktionInhaltLocalDate(beitrittsdatum)
+				,this.doPersist);
 		
 		this.transaktionen.add(ret);
 		
@@ -213,8 +222,9 @@ public class Mitglied implements Position{
 				this.genossenschaft.getGenossenschaftID()
 				,this.mitgliedID
 				,datum
-				,MglTransaktionsTyp.MglAustritt
-				,new MglTransaktionInhaltLocalDate(austrittsdatum));
+				,MglTransaktionsTyp.MitgliedAustritt
+				,new MglTransaktionInhaltLocalDate(austrittsdatum)
+				,this.doPersist);
 		
 		this.transaktionen.add(ret);
 		
@@ -315,6 +325,12 @@ public class Mitglied implements Position{
 		this.anteilsbloecke = anteile;
 	}
 	
-	
+	public boolean isDoPersist() {
+		return doPersist;
+	}
+
+	public void setDoPersist(boolean doPersist) {
+		this.doPersist = doPersist;
+	}
 
 }

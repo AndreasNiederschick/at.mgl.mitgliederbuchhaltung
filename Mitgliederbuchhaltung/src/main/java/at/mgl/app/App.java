@@ -31,7 +31,7 @@ public class App
     public static void main( String[] args )
     {
         //TestSzenario.szenarioStandard();
-        //TestSzenario.szenarioLasttest(100, 10);
+        //TestSzenario.szenarioLasttest(5, 10);
         
     	
     	

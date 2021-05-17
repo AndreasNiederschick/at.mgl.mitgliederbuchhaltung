@@ -109,7 +109,7 @@ public class MglTransaktion implements IMglTransaktion {
 	 // Implementierung der Methoden aus dem Interface
 
 	@Override
-	public MglTransaktion stornieren() {
+	public MglTransaktion stornieren(boolean doPersist) {
 		
 		MglTransaktion ret = MglTransaktionFactory.erstelleTransaktion(
 				this.mglGenossenschaftID
@@ -117,7 +117,8 @@ public class MglTransaktion implements IMglTransaktion {
 				,this.mglAnteilsblockID
 				,this.mglDatumTransaktion
 				,this.mglTransaktionsTyp
-				,this.mglInhalt);
+				,this.mglInhalt
+				,doPersist);
 		
 		ret.setIstStornoTransaktion(true);
 		ret.mglTstStorniert = this.mglTstAngelegt;
